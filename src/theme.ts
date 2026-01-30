@@ -24,12 +24,15 @@ const theme = createTheme({
         {
           props: { variant: 'square' },
           style: {
-            borderRadius: 0,
+            borderRadius: 4,
             width: 40,
             height: 40,
             minWidth: 40,
             minHeight: 40,
             padding: 0,
+            backgroundColor: '#1976d2',
+            color: '#fff',
+            '&:hover': { backgroundColor: '#1565c0' },
           },
         },
       ],

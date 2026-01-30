@@ -1,14 +1,15 @@
-import { Typography, Box } from '@mui/material';
 import { CourseCardProps } from '@/components/lib/types';
+import { Typography, Box } from '@mui/material';
 
-export default function CreationDate({
-  creationDate,
-}: Pick<CourseCardProps, 'creationDate'>) {
+export default function AuthorsList({
+  authors,
+}: Pick<CourseCardProps, 'authors'>) {
   return (
     <Box
       sx={{
         display: 'flex',
         gap: '7px',
+        alignItems: 'baseline',
       }}
     >
       <Typography
@@ -17,7 +18,7 @@ export default function CreationDate({
           fontSize: '0.8em',
         }}
       >
-        Created:
+        Authors:{' '}
       </Typography>
       <Typography
         variant="body2"
@@ -25,7 +26,7 @@ export default function CreationDate({
           fontSize: '0.8em',
         }}
       >
-        {creationDate}
+        {authors[0]} {authors[1]}{' '}
       </Typography>
     </Box>
   );

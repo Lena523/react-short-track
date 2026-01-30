@@ -12,12 +12,21 @@ export default function Courses() {
     mockedAuthorsList
   );
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '40px',
+        justifyItems: 'center',
+        maxWidth: '900px',
+        margin: '0 auto',
+        paddingTop: '50px',
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          maxWidth: '800px',
         }}
       >
         <SearchBar />
@@ -39,6 +48,6 @@ export default function Courses() {
           />
         ))}
       </CoursesList>
-    </>
+    </Box>
   );
 }
