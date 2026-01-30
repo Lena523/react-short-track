@@ -1,2 +1,2 @@
 export * from './header';
-export * from './search-bar';
+export * from './courses/';

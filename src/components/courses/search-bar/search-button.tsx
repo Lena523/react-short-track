@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
-import type { ButtonElementProps } from '../lib/types';
+import type { ButtonElementProps } from '@/components/lib/types';
 
-export default function LoginButton({
+export default function SearchButton({
   action,
   onClick,
   isDisabled,

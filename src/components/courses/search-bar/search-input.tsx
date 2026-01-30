@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import type { InputElementProps } from '../lib/types';
+import type { InputElementProps } from '@/components/lib/types';
 
 export default function SearchInput({
   isDisabled,
@@ -17,6 +17,7 @@ export default function SearchInput({
       sx={{
         backgroundColor: '#FFFFFF',
         borderRadius: '4px',
+        minWidth: '300px',
       }}
     />
   );

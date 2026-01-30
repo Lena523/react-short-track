@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
-import LoginButton from './login-button';
-import UserName from './user-name';
-import Logo from './logo';
+import LoginButton from './login-button/login-button';
+import UserName from './user-name/user-name';
+import Logo from './logo/logo';
 
 export default function Header() {
   return (
