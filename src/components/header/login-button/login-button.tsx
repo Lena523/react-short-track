@@ -7,15 +7,7 @@ export default function LoginButton({
   isDisabled,
 }: ButtonElementProps) {
   return (
-    <Button
-      disabled={isDisabled}
-      size="small"
-      variant="contained"
-      onClick={onClick}
-      sx={{
-        borderRadius: '4px',
-      }}
-    >
+    <Button disabled={isDisabled} onClick={onClick}>
       {action}
     </Button>
   );

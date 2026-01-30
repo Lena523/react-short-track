@@ -1,5 +1,5 @@
-import SearchInput from './search-input';
-import SearchButton from './search-button';
+import SearchInput from './search-input/search-input';
+import SearchButton from './search-button/search-button';
 import { Box } from '@mui/material';
 
 export default function SearchBar() {
@@ -18,7 +18,7 @@ export default function SearchBar() {
       <SearchButton
         isDisabled={false}
         onClick={() => console.log('')}
-        action={'Search'}
+        action={'SEARCH'}
       />
     </Box>
   );
