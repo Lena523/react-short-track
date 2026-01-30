@@ -1,5 +1,5 @@
-import Container from '@mui/material/Container';
-import Header from '../../widgets/header/header';
+import { Box, Container } from '@mui/material';
+import { Header, SearchBar } from '@/components';
 
 export default function CoursesPage() {
   return (
@@ -11,6 +11,16 @@ export default function CoursesPage() {
       }}
     >
       <Header />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '50px',
+        }}
+      >
+        <SearchBar />
+      </Box>
     </Container>
   );
 }
