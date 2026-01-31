@@ -1,8 +1,9 @@
 import SearchInput from './search-input/search-input';
 import SearchButton from './search-button/search-button';
 import { Box } from '@mui/material';
+import { SearchBarProps } from '@/components/lib/types';
 
-export default function SearchBar() {
+export default function SearchBar({ onChange, onClick }: SearchBarProps) {
   return (
     <Box
       sx={{
@@ -12,14 +13,10 @@ export default function SearchBar() {
     >
       <SearchInput
         isDisabled={false}
-        onChange={() => console.log('')}
+        onChange={onChange}
         placeholder={'search for the course'}
       />
-      <SearchButton
-        isDisabled={false}
-        onClick={() => console.log('')}
-        action={'SEARCH'}
-      />
+      <SearchButton isDisabled={false} onClick={onClick} action={'SEARCH'} />
     </Box>
   );
 }

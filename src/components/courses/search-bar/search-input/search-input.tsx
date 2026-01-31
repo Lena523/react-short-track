@@ -10,7 +10,7 @@ export default function SearchInput({
     <TextField
       placeholder={placeholder}
       disabled={isDisabled}
-      onChange={onChange}
+      onChange={(e) => onChange(e)}
     />
   );
 }

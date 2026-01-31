@@ -1,6 +1,6 @@
 export type ButtonElementProps = {
   action: string;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   isDisabled: boolean;
 };
 
@@ -9,7 +9,7 @@ export type TextElementProps = {
 };
 
 export type InputElementProps = {
-  onChange: () => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   isDisabled: boolean;
   placeholder: string;
 };
@@ -30,4 +30,9 @@ export type CourseCardProps = {
 export type Authors = {
   id: string;
   name: string;
+};
+
+export type SearchBarProps = {
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
