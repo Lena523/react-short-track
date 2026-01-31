@@ -1,11 +1,22 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import CoursesPage from './pages/courses-page/courses-page';
+import { Container } from '@mui/material';
+import { Header } from './components';
+import { Courses } from './components';
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <CoursesPage />
+      <Container
+        disableGutters
+        sx={{
+          backgroundColor: '#D3D3D3',
+          height: '100vh',
+        }}
+      >
+        <Header />
+        <Courses />
+      </Container>
     </>
   );
 }
