@@ -2,8 +2,26 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Container } from '@mui/material';
 import { Header } from './components';
 import { Courses } from './components';
+import {
+  mockedAuthorsList,
+  mockedCoursesList,
+} from './components/lib/mockCoursesList';
+import { useEffect } from 'react';
+import { defineCourseCardArguments } from './components/lib/utils';
 
 function App() {
+  const resultList = defineCourseCardArguments(
+    mockedCoursesList,
+    mockedAuthorsList
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem('courses')) {
+      return;
+    }
+    localStorage.setItem('courses', JSON.stringify(resultList));
+  }, [resultList]);
+
   return (
     <>
       <CssBaseline />

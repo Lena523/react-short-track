@@ -17,6 +17,7 @@ export default function CourseCard({
   duration,
   creationDate,
   onShowCourse,
+  onDeleteCourse,
 }: CourseCardProps) {
   return (
     <Box
@@ -65,7 +66,7 @@ export default function CourseCard({
             />
             <DeleteCourseButton
               isDisabled={false}
-              onClick={() => console.log('')}
+              onClick={() => onDeleteCourse(id)}
             />
             <EditCourseButton
               isDisabled={false}

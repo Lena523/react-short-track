@@ -24,7 +24,7 @@ export type CourseCardProps = {
   duration: number;
   authors: string[];
   onShowCourse: CardCourseHandler;
-  onDeleteCourse?: CardCourseHandler;
+  onDeleteCourse: CardCourseHandler;
   onEditCourse?: CardCourseHandler;
 };
 

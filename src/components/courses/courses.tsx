@@ -5,44 +5,63 @@ import AddNewCourseButton from './add-new-course-button';
 import CoursesList from './courses-list';
 import CourseCard from './courses-list/courses-card';
 import CourseInfo from '../course-info/course-info';
-import { mockedCoursesList, mockedAuthorsList } from '../lib/mockCoursesList';
 import {
-  defineCourseCardArguments,
   findCourseByTitle,
   findCourseById,
+  deleteCourseById,
 } from '../lib/utils';
 import { CardCourseHandler, MockedListProps } from '../lib/types';
 
 export default function Courses() {
-  const resultList = defineCourseCardArguments(
-    mockedCoursesList,
-    mockedAuthorsList
-  );
-
+  const [allCourses, setAllCourses] = useState<MockedListProps[]>(() => {
+    const saved = localStorage.getItem('courses');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [course, setCourse] = useState('');
-  const [newList, setNewList] = useState(resultList);
+  const [newList, setNewList] = useState(allCourses);
   const [showCourse, setShowCourse] = useState<MockedListProps | null>(null);
+
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
-    if (value === '') {
-      setNewList(resultList);
+    if (value === '' && allCourses !== null) {
+      setNewList(allCourses);
     }
     setCourse(value);
   };
 
   const handleSearchButton: React.ComponentProps<'button'>['onClick'] = (e) => {
     e.preventDefault();
-    const foundCourse = findCourseByTitle(course, resultList);
-    setNewList(foundCourse);
+    if (allCourses) {
+      const foundCourse = findCourseByTitle(course, allCourses);
+      setNewList(foundCourse);
+    }
   };
 
   const handleShowCourse: CardCourseHandler = (id: string) => {
-    const course = findCourseById(id, resultList);
-    setShowCourse(course);
+    if (allCourses) {
+      const course = findCourseById(id, allCourses);
+      setShowCourse(course);
+    }
   };
 
-  const renderList =
-    course.length === 0 ? resultList : newList.length > 0 ? newList : [];
+  const handleDeleteCourse: CardCourseHandler = (id: string) => {
+    const courseToDelete = findCourseById(id, allCourses);
+    if (courseToDelete) {
+      const courses = localStorage.getItem('courses');
+      if (courses) {
+        const newCourseList = deleteCourseById(
+          courseToDelete.id,
+          JSON.parse(courses)
+        );
+        localStorage.setItem('courses', JSON.stringify(newCourseList));
+        if (newCourseList) {
+          setAllCourses(newCourseList);
+        }
+      }
+    }
+  };
+
+  const renderList = course.length === 0 ? allCourses : newList ? newList : [];
 
   return (
     <>
@@ -77,18 +96,20 @@ export default function Courses() {
             />
           </Box>
           <CoursesList>
-            {renderList.map((list) => (
-              <CourseCard
-                id={list.id}
-                key={list.id}
-                title={list.title}
-                description={list.description}
-                authors={list.authors}
-                creationDate={list.creationDate}
-                duration={list.duration}
-                onShowCourse={handleShowCourse}
-              />
-            ))}
+            {renderList &&
+              renderList.map((list) => (
+                <CourseCard
+                  id={list.id}
+                  key={list.id}
+                  title={list.title}
+                  description={list.description}
+                  authors={list.authors}
+                  creationDate={list.creationDate}
+                  duration={list.duration}
+                  onShowCourse={handleShowCourse}
+                  onDeleteCourse={handleDeleteCourse}
+                />
+              ))}
           </CoursesList>
         </Box>
       )}

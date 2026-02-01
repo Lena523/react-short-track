@@ -33,3 +33,10 @@ export function findCourseById(
 ): MockedListProps | null {
   return courseList.find((course) => course.id === id) ?? null;
 }
+
+export function deleteCourseById(
+  id: string,
+  courses: MockedListProps[]
+): MockedListProps[] | null {
+  return courses.filter((course) => course.id !== id);
+}
