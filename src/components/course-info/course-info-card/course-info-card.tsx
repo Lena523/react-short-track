@@ -1,4 +1,4 @@
-import { CourseCardProps } from '@/components/lib/types';
+import { CourseInfoCardProps } from '@/components/lib/types';
 import Description from './description/description';
 import AuthorsList from './autors-list/authors-list';
 import CreationDate from './creation-date/creation-date';
@@ -6,40 +6,34 @@ import Duration from './duration/duration';
 import Id from './id/id';
 import { Box } from '@mui/material';
 
-export default function CourseInfoCard({
-  authors,
-  creationDate,
-  description,
-  duration,
-  id,
-}: CourseCardProps) {
+export default function CourseInfoCard({ course }: CourseInfoCardProps) {
   return (
     <Box
       sx={{
         backgroundColor: '#FFFFFF',
-        padding: '20px 25px',
-        border: '2px solid #000000',
+        padding: '40px',
         borderRadius: '4px',
         boxShadow: 'revert-layer',
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: '30px',
+        gap: '40px',
       }}
     >
       <Box>
-        <Description text={description} />
+        <Description text={course.description} />
       </Box>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px',
+          gap: '10px',
+          justifyContent: 'flex-end',
         }}
       >
-        <Id id={id} />
-        <Duration duration={duration} />
-        <CreationDate creationDate={creationDate} />
-        <AuthorsList authors={authors} />
+        <Id id={course.id} />
+        <Duration duration={course.duration} />
+        <CreationDate creationDate={course.creationDate} />
+        <AuthorsList authors={course.authors} />
       </Box>
     </Box>
   );

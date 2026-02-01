@@ -8,19 +8,20 @@ export default function CreationDate({
     <Box
       sx={{
         display: 'flex',
-        gap: '7px',
+        alignItems: 'baseline',
       }}
     >
       <Typography
         variant="subtitle1"
         sx={{
           fontWeight: '700',
+          minWidth: '100px',
         }}
       >
         Created:
       </Typography>
       <Typography
-        variant="body2"
+        variant="body1"
         sx={{
           fontSize: '0.8em',
         }}

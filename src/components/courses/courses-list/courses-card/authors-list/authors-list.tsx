@@ -26,7 +26,7 @@ export default function AuthorsList({
           fontSize: '0.8em',
         }}
       >
-        {authors[0]} {authors[1]}{' '}
+        {authors[0]}, {authors[1]}{' '}
       </Typography>
     </Box>
   );

@@ -4,7 +4,14 @@ import { TextElementProps } from '@/components/lib/types';
 export default function Description({ text }: TextElementProps) {
   return (
     <Box>
-      <Typography variant="h5">Description</Typography>
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: '700',
+        }}
+      >
+        Description
+      </Typography>
       <Typography
         variant="body2"
         sx={{

@@ -10,18 +10,20 @@ import EditCourseButton from './edit-course-button/edit-course-button';
 import { CourseCardProps } from '@/components/lib/types';
 
 export default function CourseCard({
+  id,
   title,
   description,
   authors,
   duration,
   creationDate,
+  onShowCourse,
 }: CourseCardProps) {
   return (
     <Box
+      id={id}
       sx={{
         backgroundColor: '#FFFFFF',
         padding: '20px 25px',
-        border: '2px solid #000000',
         borderRadius: '4px',
         boxShadow: 'revert-layer',
       }}
@@ -59,7 +61,7 @@ export default function CourseCard({
             <ShowCourseButton
               action="SHOW COURSE"
               isDisabled={false}
-              onClick={() => console.log('')}
+              onClick={() => onShowCourse(id)}
             />
             <DeleteCourseButton
               isDisabled={false}

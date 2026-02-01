@@ -1,10 +1,10 @@
-import { CourseCardProps } from './types';
+import { MockedListProps } from './types';
 import { Authors } from './types';
 
 export function defineCourseCardArguments(
-  courseList: CourseCardProps[],
+  courseList: MockedListProps[],
   authorsList: Authors[]
-): CourseCardProps[] {
+): MockedListProps[] {
   return courseList.map((course) => ({
     ...course,
     authors: course.authors.map((authorId) => {
@@ -16,8 +16,8 @@ export function defineCourseCardArguments(
 
 export function findCourseByTitle(
   title: string,
-  courseList: CourseCardProps[]
-): CourseCardProps[] {
+  courseList: MockedListProps[]
+): MockedListProps[] {
   const searchString = title.toLowerCase();
 
   return courseList.filter(
@@ -25,4 +25,11 @@ export function findCourseByTitle(
       course.title.toLowerCase().includes(searchString) ||
       course.description.toLowerCase().includes(searchString)
   );
+}
+
+export function findCourseById(
+  id: string,
+  courseList: MockedListProps[]
+): MockedListProps | null {
+  return courseList.find((course) => course.id === id) ?? null;
 }

@@ -6,19 +6,20 @@ export default function Id({ id }: Pick<CourseCardProps, 'id'>) {
     <Box
       sx={{
         display: 'flex',
-        gap: '7px',
+        alignItems: 'baseline',
       }}
     >
       <Typography
-        variant="subtitle2"
+        variant="subtitle1"
         sx={{
-          fontSize: '0.8em',
+          fontWeight: '700',
+          minWidth: '100px',
         }}
       >
         ID:
       </Typography>
       <Typography
-        variant="body2"
+        variant="body1"
         sx={{
           fontSize: '0.8em',
         }}

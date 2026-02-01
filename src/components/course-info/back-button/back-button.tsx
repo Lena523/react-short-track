@@ -7,7 +7,13 @@ export default function BackButton({
   onClick,
 }: ButtonElementProps) {
   return (
-    <Button disabled={isDisabled} onClick={onClick}>
+    <Button
+      disabled={isDisabled}
+      onClick={onClick}
+      sx={{
+        alignSelf: 'flex-end',
+      }}
+    >
       {action}
     </Button>
   );

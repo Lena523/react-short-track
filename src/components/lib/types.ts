@@ -14,17 +14,27 @@ export type InputElementProps = {
   placeholder: string;
 };
 
-export interface BasicChildrenProps {
-  children: React.ReactNode;
-}
+export type CardCourseHandler = (id: string) => void;
 
 export type CourseCardProps = {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   creationDate: string;
   duration: number;
   authors: string[];
+  onShowCourse: CardCourseHandler;
+  onDeleteCourse?: CardCourseHandler;
+  onEditCourse?: CardCourseHandler;
+};
+
+export type MockedListProps = Omit<
+  CourseCardProps,
+  'onShowCourse' | 'onDeleteCourse' | 'onEditCourse'
+>;
+
+export type CourseInfoCardProps = {
+  course: MockedListProps;
 };
 
 export type Authors = {

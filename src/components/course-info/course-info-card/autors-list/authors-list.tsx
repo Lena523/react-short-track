@@ -8,7 +8,6 @@ export default function AuthorsList({
     <Box
       sx={{
         display: 'flex',
-        gap: '7px',
         alignItems: 'baseline',
       }}
     >
@@ -16,17 +15,18 @@ export default function AuthorsList({
         variant="subtitle1"
         sx={{
           fontWeight: '700',
+          minWidth: '100px',
         }}
       >
         Authors:{' '}
       </Typography>
       <Typography
-        variant="body2"
+        variant="body1"
         sx={{
           fontSize: '0.8em',
         }}
       >
-        {authors[0]} {authors[1]}{' '}
+        {authors[0]}, {authors[1]}{' '}
       </Typography>
     </Box>
   );

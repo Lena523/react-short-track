@@ -12,6 +12,7 @@ const theme = createTheme({
           minWidth: 120,
           textTransform: 'none',
           borderRadius: 4,
+          width: 'fit-content',
         },
       },
       variants: [
