@@ -5,6 +5,7 @@ import AddNewCourseButton from './add-new-course-button';
 import CoursesList from './courses-list';
 import CourseCard from './courses-list/courses-card';
 import CourseInfo from '../course-info/course-info';
+import { EmptyCoursesList } from '../empty-course-list';
 import {
   findCourseByTitle,
   findCourseById,
@@ -65,7 +66,9 @@ export default function Courses() {
 
   return (
     <>
-      {showCourse ? (
+      {allCourses.length === 0 ? (
+        <EmptyCoursesList />
+      ) : showCourse ? (
         <CourseInfo course={showCourse} />
       ) : (
         <Box

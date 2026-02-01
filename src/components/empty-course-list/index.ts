@@ -1,1 +1,1 @@
-export { default as EmptyCourseList } from './empty-course-list';
+export { default as EmptyCoursesList } from './empty-courses-list';
