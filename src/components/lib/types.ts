@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type ButtonElementProps = {
   action: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -41,6 +43,10 @@ export type Authors = {
   id: string;
   name: string;
 };
+
+export interface BasicChildrenProps {
+  children: ReactNode;
+}
 
 export type SearchBarProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
