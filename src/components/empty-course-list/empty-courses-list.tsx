@@ -30,7 +30,7 @@ export default function EmptyCoursesList() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '20px',
-            height: '100vh',
+            height: 'calc(100vh - 200px)',
           }}
         >
           <Title />

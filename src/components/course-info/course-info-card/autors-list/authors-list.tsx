@@ -16,6 +16,10 @@ export default function AuthorsList({
         sx={{
           fontWeight: '700',
           minWidth: '100px',
+          maxWidth: '180px',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         }}
       >
         Authors:{' '}
