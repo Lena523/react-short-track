@@ -15,10 +15,10 @@ export function defineCourseCardArguments(
 }
 
 export function findCourseByTitle(
-  title: string,
+  text: string,
   courseList: MockedListProps[]
 ): MockedListProps[] {
-  const searchString = title.toLowerCase();
+  const searchString = text.toLowerCase();
 
   return courseList.filter(
     (course) =>

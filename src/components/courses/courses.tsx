@@ -21,11 +21,12 @@ export default function Courses() {
   const [course, setCourse] = useState('');
   const [newList, setNewList] = useState(allCourses);
   const [showCourse, setShowCourse] = useState<MockedListProps | null>(null);
+  const renderList = course.length === 0 ? allCourses : newList ? newList : [];
 
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
     if (value === '' && allCourses !== null) {
-      setNewList(allCourses);
+      setAllCourses(allCourses);
     }
     setCourse(value);
   };
@@ -40,13 +41,14 @@ export default function Courses() {
 
   const handleShowCourse: CardCourseHandler = (id: string) => {
     if (allCourses) {
-      const course = findCourseById(id, allCourses);
+      const course = findCourseById(id, renderList);
       setShowCourse(course);
     }
   };
 
   const handleDeleteCourse: CardCourseHandler = (id: string) => {
-    const courseToDelete = findCourseById(id, allCourses);
+    const courseToDelete = findCourseById(id, renderList);
+    console.log(courseToDelete);
     if (courseToDelete) {
       const courses = localStorage.getItem('courses');
       if (courses) {
@@ -57,12 +59,11 @@ export default function Courses() {
         localStorage.setItem('courses', JSON.stringify(newCourseList));
         if (newCourseList) {
           setAllCourses(newCourseList);
+          setNewList(newCourseList);
         }
       }
     }
   };
-
-  const renderList = course.length === 0 ? allCourses : newList ? newList : [];
 
   return (
     <>
