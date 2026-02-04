@@ -26,7 +26,7 @@ export default function Courses() {
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
     if (value === '' && allCourses !== null) {
-      setAllCourses(allCourses);
+      setNewList(allCourses);
     }
     setCourse(value);
   };
