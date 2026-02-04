@@ -1,17 +1,17 @@
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import SearchBar from './search-bar/search-bar';
+import SearchBar from './search-bar';
 import AddNewCourseButton from './add-new-course-button';
 import CoursesList from './courses-list';
 import CourseCard from './courses-list/courses-card';
-import CourseInfo from '../course-info/course-info';
-import { EmptyCoursesList } from '../empty-course-list';
+import { CourseInfoPage } from '@/pages';
+import { EmptyCoursesList } from '@/components/empty-course-list';
 import {
   findCourseByTitle,
   findCourseById,
   deleteCourseById,
-} from '../lib/utils';
-import { CardCourseHandler, MockedListProps } from '../lib/types';
+} from '@/components/lib/utils';
+import { CardCourseHandler, MockedListProps } from '@/components/lib/types';
 
 export default function Courses() {
   const [allCourses, setAllCourses] = useState<MockedListProps[]>(() => {
@@ -70,7 +70,7 @@ export default function Courses() {
       {allCourses.length === 0 ? (
         <EmptyCoursesList />
       ) : showCourse ? (
-        <CourseInfo course={showCourse} />
+        <CourseInfoPage course={showCourse} />
       ) : (
         <Box
           sx={{

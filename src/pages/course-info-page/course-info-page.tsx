@@ -1,12 +1,10 @@
 import { Box } from '@mui/material';
-import Title from './course-info-title/course-info-title';
-import BackButton from './back-button/back-button';
+import { Title, BackButton, CourseInfoCard } from '@/components/course-info';
 import { CourseInfoCardProps } from '@/components/lib/types';
-import CourseInfoCard from './course-info-card';
 import { useState } from 'react';
-import Courses from '../courses/courses';
+import Courses from '@/components/courses/courses';
 
-export default function CourseInfo({ course }: CourseInfoCardProps) {
+export default function CourseInfoPage({ course }: CourseInfoCardProps) {
   const [backToCourses, setBackToCourses] = useState(false);
 
   const handleBackToCourses = () => {

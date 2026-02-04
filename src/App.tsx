@@ -1,7 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { Container } from '@mui/material';
-import { Header } from './components';
-import { Courses } from './components';
+import { CoursesPage } from '@/pages';
 import {
   mockedAuthorsList,
   mockedCoursesList,
@@ -32,8 +31,7 @@ function App() {
           height: '100vh',
         }}
       >
-        <Header />
-        <Courses />
+        <CoursesPage />
       </Container>
     </>
   );
