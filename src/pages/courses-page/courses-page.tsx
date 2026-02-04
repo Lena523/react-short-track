@@ -1,9 +1,10 @@
 import { Header, Courses } from '@/components';
+import type { Handler } from '@/components/lib/types';
 
-export default function CoursesPage() {
+export default function CoursesPage({ handleLogOut }: Handler) {
   return (
     <>
-      <Header />
+      <Header handleLogOut={handleLogOut} />
       <Courses />
     </>
   );

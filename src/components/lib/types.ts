@@ -12,8 +12,11 @@ export type TextElementProps = {
 
 export type InputElementProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  isDisabled: boolean;
-  placeholder: string;
+  isDisabled?: boolean;
+  placeholder?: string;
+  label?: string;
+  type?: string;
+  name?: string;
 };
 
 export type CardCourseHandler = (id: string) => void;
@@ -51,4 +54,8 @@ export interface BasicChildrenProps {
 export type SearchBarProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+export type Handler = {
+  handleLogOut: () => void;
 };

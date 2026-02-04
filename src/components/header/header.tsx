@@ -2,8 +2,9 @@ import { Box } from '@mui/material';
 import LoginButton from './login-button/login-button';
 import UserName from './user-name/user-name';
 import Logo from './logo/logo';
+import { Handler } from '../lib/types';
 
-export default function Header() {
+export default function Header({ handleLogOut }: Handler) {
   return (
     <Box
       component={'header'}
@@ -25,7 +26,7 @@ export default function Header() {
         <UserName text={'Harry Potter'}></UserName>
         <LoginButton
           isDisabled={false}
-          onClick={() => console.log('')}
+          onClick={handleLogOut}
           action={'LOGOUT'}
         />
       </Box>
