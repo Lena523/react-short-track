@@ -1,10 +1,12 @@
 import { Header, Courses } from '@/components';
-import type { Handler } from '@/components/lib/types';
+import type { LoginProps } from '@/components/lib/types';
 
-export default function CoursesPage({ handleLogOut }: Handler) {
+export default function CoursesPage({
+  onLogout,
+}: Pick<LoginProps, 'onLogout'>) {
   return (
     <>
-      <Header handleLogOut={handleLogOut} />
+      <Header onLogout={onLogout} />
       <Courses />
     </>
   );

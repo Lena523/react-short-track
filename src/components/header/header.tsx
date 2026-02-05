@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import LoginButton from './login-button/login-button';
 import UserName from './user-name/user-name';
 import Logo from './logo/logo';
-import { Handler } from '../lib/types';
+import { LoginProps } from '../lib/types';
 
-export default function Header({ handleLogOut }: Handler) {
+export default function Header({ onLogout }: Pick<LoginProps, 'onLogout'>) {
   return (
     <Box
       component={'header'}
@@ -24,11 +24,7 @@ export default function Header({ handleLogOut }: Handler) {
         }}
       >
         <UserName text={'Harry Potter'}></UserName>
-        <LoginButton
-          isDisabled={false}
-          onClick={handleLogOut}
-          action={'LOGOUT'}
-        />
+        <LoginButton isDisabled={false} onClick={onLogout} action={'LOGOUT'} />
       </Box>
     </Box>
   );

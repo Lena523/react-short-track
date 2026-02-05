@@ -56,6 +56,9 @@ export type SearchBarProps = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export type Handler = {
-  handleLogOut: () => void;
-};
+export type AuthHandler = () => void;
+
+export interface LoginProps {
+  onLogin: AuthHandler;
+  onLogout: AuthHandler;
+}

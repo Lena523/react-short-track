@@ -25,9 +25,14 @@ function App() {
     localStorage.setItem('courses', JSON.stringify(resultList));
   }, [resultList]);
 
-  const handleLogOut = () => {
+  const handleLogout = () => {
     localStorage.removeItem('tokenAuth');
     setLoginRender(false);
+  };
+
+  const handleLogin = () => {
+    localStorage.setItem('tokenAuth', '');
+    setLoginRender(true);
   };
 
   return (
@@ -41,9 +46,9 @@ function App() {
         }}
       >
         {loginRender ? (
-          <LoginPage />
+          <LoginPage onLogin={handleLogin} />
         ) : (
-          <CoursesPage handleLogOut={handleLogOut} />
+          <CoursesPage onLogout={handleLogout} />
         )}
       </Container>
     </>

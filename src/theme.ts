@@ -12,7 +12,6 @@ const theme = createTheme({
           minWidth: 120,
           textTransform: 'none',
           borderRadius: 4,
-          width: 'fit-content',
         },
       },
       variants: [
@@ -20,6 +19,7 @@ const theme = createTheme({
           props: { variant: 'contained' },
           style: {
             borderRadius: 4,
+            width: 'fullWidth',
           },
         },
         {

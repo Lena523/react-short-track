@@ -3,7 +3,12 @@ import { ButtonElementProps } from '@/components/lib/types';
 
 export default function LoginButton({ ...rest }: ButtonElementProps) {
   return (
-    <Button onClick={rest.onClick} disabled={rest.isDisabled}>
+    <Button
+      variant="contained"
+      fullWidth
+      onClick={rest.onClick}
+      disabled={rest.isDisabled}
+    >
       {rest.action}
     </Button>
   );
