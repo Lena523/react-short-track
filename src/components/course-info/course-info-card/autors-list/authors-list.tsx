@@ -16,10 +16,6 @@ export default function AuthorsList({
         sx={{
           fontWeight: '700',
           minWidth: '100px',
-          maxWidth: '180px',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
         }}
       >
         Authors:{' '}
@@ -28,6 +24,9 @@ export default function AuthorsList({
         variant="body1"
         sx={{
           fontSize: '0.8em',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         }}
       >
         {authors[0]}, {authors[1]}{' '}

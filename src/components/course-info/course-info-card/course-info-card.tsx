@@ -27,12 +27,16 @@ export default function CourseInfoCard({ course }: CourseInfoCardProps) {
       </Typography>
       <Box
         sx={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          display: 'flex',
           gap: '30px',
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            flex: 1,
+            minWidth: 0,
+          }}
+        >
           <Description text={course.description} />
         </Box>
         <Box
@@ -40,9 +44,10 @@ export default function CourseInfoCard({ course }: CourseInfoCardProps) {
             display: 'flex',
             flexDirection: 'column',
             gap: '10px',
-            justifyContent: 'flex-end',
             borderLeft: '2px solid gray',
             paddingLeft: '35px',
+            flex: 1,
+            minWidth: 0,
           }}
         >
           <Id id={course.id} />
