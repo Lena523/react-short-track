@@ -11,7 +11,7 @@ export type TextElementProps = {
 };
 
 export type InputElementProps = {
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   isDisabled?: boolean;
   placeholder?: string;
   label?: string;
@@ -56,9 +56,18 @@ export type SearchBarProps = {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export type AuthHandler = () => void;
+export type Inputs = {
+  user: string;
+  password: string;
+};
+
+export type AuthHandler = ({ ...data }: Inputs) => void;
 
 export interface LoginProps {
   onLogin: AuthHandler;
   onLogout: AuthHandler;
 }
+
+export type ErrorMessageProps = {
+  textMessage: string;
+};

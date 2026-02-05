@@ -4,7 +4,10 @@ import UserName from './user-name/user-name';
 import Logo from './logo/logo';
 import { LoginProps } from '../lib/types';
 
-export default function Header({ onLogout }: Pick<LoginProps, 'onLogout'>) {
+export default function Header({
+  onLogout,
+  isVisible,
+}: Pick<LoginProps, 'onLogout'> & { isVisible: boolean }) {
   return (
     <Box
       component={'header'}
@@ -21,10 +24,15 @@ export default function Header({ onLogout }: Pick<LoginProps, 'onLogout'>) {
           display: 'flex',
           alignItems: 'center',
           gap: '20px',
+          visibility: isVisible ? 'visible' : 'hidden',
         }}
       >
         <UserName text={'Harry Potter'}></UserName>
-        <LoginButton isDisabled={false} onClick={onLogout} action={'LOGOUT'} />
+        <LoginButton
+          isDisabled={false}
+          onClick={() => onLogout}
+          action={'LOGOUT'}
+        />
       </Box>
     </Box>
   );

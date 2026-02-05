@@ -6,7 +6,7 @@ export default function CoursesPage({
 }: Pick<LoginProps, 'onLogout'>) {
   return (
     <>
-      <Header onLogout={onLogout} />
+      <Header onLogout={onLogout} isVisible={true} />
       <Courses />
     </>
   );

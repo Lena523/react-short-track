@@ -7,6 +7,7 @@ import {
 } from './components/lib/mockCoursesList';
 import { useEffect, useState } from 'react';
 import { defineCourseCardArguments } from './components/lib/utils';
+import type { Inputs } from './components/lib/types';
 
 function App() {
   const [loginRender, setLoginRender] = useState(() => {
@@ -30,9 +31,10 @@ function App() {
     setLoginRender(false);
   };
 
-  const handleLogin = () => {
+  const handleLogin = ({ ...data }: Inputs) => {
     localStorage.setItem('tokenAuth', '');
     setLoginRender(true);
+    console.log(data);
   };
 
   return (
@@ -46,7 +48,7 @@ function App() {
         }}
       >
         {loginRender ? (
-          <LoginPage onLogin={handleLogin} />
+          <LoginPage onLogin={handleLogin} onLogout={handleLogout} />
         ) : (
           <CoursesPage onLogout={handleLogout} />
         )}

@@ -3,8 +3,8 @@ import { ButtonElementProps } from '@/components/lib/types';
 
 export default function LoginButton({
   action,
-  onClick,
   isDisabled,
+  onClick,
 }: ButtonElementProps) {
   return (
     <Button disabled={isDisabled} onClick={onClick}>
