@@ -6,6 +6,7 @@ import CoursesList from './courses-list';
 import CourseCard from './courses-list/courses-card';
 import { CourseInfoPage } from '@/pages';
 import { EmptyCoursesList } from '@/components/empty-course-list';
+import { CourseFormModal } from '@/components/course-form-modal';
 import {
   findCourseByTitle,
   findCourseById,
@@ -21,6 +22,7 @@ export default function Courses() {
   const [course, setCourse] = useState('');
   const [newList, setNewList] = useState(allCourses);
   const [showCourse, setShowCourse] = useState<MockedListProps | null>(null);
+  const [createCourse, setCreateCourse] = useState(false);
   const renderList = course.length === 0 ? allCourses : newList ? newList : [];
 
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
@@ -65,8 +67,13 @@ export default function Courses() {
     }
   };
 
+  const handleCreateNewCourse = () => {
+    setCreateCourse(!createCourse);
+  };
+
   return (
     <>
+      <CourseFormModal isOpen={createCourse} onClose={handleCreateNewCourse} />
       {allCourses.length === 0 ? (
         <EmptyCoursesList />
       ) : showCourse ? (
@@ -95,7 +102,7 @@ export default function Courses() {
             />
             <AddNewCourseButton
               action={'ADD NEW COURSE'}
-              onClick={() => console.log('')}
+              onClick={handleCreateNewCourse}
               isDisabled={false}
             />
           </Box>

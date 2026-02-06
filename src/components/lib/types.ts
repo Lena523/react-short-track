@@ -57,8 +57,12 @@ export type SearchBarProps = {
 };
 
 export type Inputs = {
-  user: string;
-  password: string;
+  user?: string;
+  password?: string;
+  title?: string;
+  description?: string;
+  duration?: string;
+  author?: string;
 };
 
 export type AuthHandler = ({ ...data }: Inputs) => void;
@@ -70,4 +74,9 @@ export interface LoginProps {
 
 export type ErrorMessageProps = {
   textMessage: string;
+};
+
+export type CourseFormModalprops = {
+  isOpen: boolean;
+  onClose: () => void;
 };
