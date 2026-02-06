@@ -8,8 +8,8 @@ export default function LoginPage({ onLogout, onLogin }: LoginProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({ criteriaMode: 'all' });
+    formState: { errors, isValid },
+  } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
   const onSubmit: SubmitHandler<Inputs> = (data) => onLogin(data);
   return (
     <>
@@ -90,7 +90,12 @@ export default function LoginPage({ onLogout, onLogin }: LoginProps) {
                 <ErrorMessage textMessage="at most 20 characters" />
               )}
             </Box>
-            <Button type="submit" variant="contained" fullWidth>
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              disabled={!isValid}
+            >
               LOGIN
             </Button>
           </Box>

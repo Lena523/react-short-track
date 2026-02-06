@@ -8,10 +8,11 @@ import {
 import { useEffect, useState } from 'react';
 import { defineCourseCardArguments } from './components/lib/utils';
 import type { Inputs } from './components/lib/types';
+import { LoginUser } from './api-services/api-requests';
 
 function App() {
-  const [loginRender, setLoginRender] = useState(() => {
-    return !localStorage.getItem('tokenAuth');
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem('tokenAuth');
   });
 
   const resultList = defineCourseCardArguments(
@@ -28,13 +29,21 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('tokenAuth');
-    setLoginRender(false);
+    setIsLoggedIn(false);
   };
 
-  const handleLogin = ({ ...data }: Inputs) => {
-    localStorage.setItem('tokenAuth', '');
-    setLoginRender(true);
-    console.log(data);
+  const handleLogin = async ({ ...data }: Inputs) => {
+    try {
+      const user = await LoginUser(data);
+      localStorage.setItem('tokenAuth', JSON.stringify(user.accessToken));
+      setIsLoggedIn(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        throw new Error('Unknown error');
+      }
+    }
   };
 
   return (
@@ -47,10 +56,10 @@ function App() {
           height: '100vh',
         }}
       >
-        {loginRender ? (
-          <LoginPage onLogin={handleLogin} onLogout={handleLogout} />
-        ) : (
+        {isLoggedIn ? (
           <CoursesPage onLogout={handleLogout} />
+        ) : (
+          <LoginPage onLogin={handleLogin} onLogout={handleLogout} />
         )}
       </Container>
     </>

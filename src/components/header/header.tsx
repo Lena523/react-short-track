@@ -28,11 +28,7 @@ export default function Header({
         }}
       >
         <UserName text={'Harry Potter'}></UserName>
-        <LoginButton
-          isDisabled={false}
-          onClick={() => onLogout}
-          action={'LOGOUT'}
-        />
+        <LoginButton isDisabled={false} onClick={onLogout} action={'LOGOUT'} />
       </Box>
     </Box>
   );

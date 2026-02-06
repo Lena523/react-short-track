@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 export type ButtonElementProps = {
   action: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | AuthHandler;
   isDisabled: boolean;
 };
 
@@ -11,7 +11,7 @@ export type TextElementProps = {
 };
 
 export type InputElementProps = {
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   isDisabled?: boolean;
   placeholder?: string;
   label?: string;
