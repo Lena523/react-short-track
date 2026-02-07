@@ -4,16 +4,23 @@ import { LoginProps, Inputs } from '@/components/lib/types';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorMessage from './error-message/error-message';
 
-export default function LoginPage({ onLogout, onLogin }: LoginProps) {
+export default function LoginPage({
+  onLogout,
+  onLogin,
+  userName,
+}: LoginProps & { userName: string }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => onLogin(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    onLogin(data);
+  };
+
   return (
     <>
-      <Header onLogout={onLogout} isVisible={false} />
+      <Header onLogout={onLogout} isVisible={false} user={userName} />
       <Container
         sx={{
           display: 'flex',

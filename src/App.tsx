@@ -15,6 +15,8 @@ function App() {
     return !!localStorage.getItem('tokenAuth');
   });
 
+  const [userName, setUserName] = useState('');
+
   const resultList = defineCourseCardArguments(
     mockedCoursesList,
     mockedAuthorsList
@@ -37,6 +39,9 @@ function App() {
       const user = await LoginUser(data);
       localStorage.setItem('tokenAuth', JSON.stringify(user.accessToken));
       setIsLoggedIn(true);
+      if (data.user) {
+        setUserName(data.user);
+      }
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -57,9 +62,13 @@ function App() {
         }}
       >
         {isLoggedIn ? (
-          <CoursesPage onLogout={handleLogout} />
+          <CoursesPage onLogout={handleLogout} userName={userName} />
         ) : (
-          <LoginPage onLogin={handleLogin} onLogout={handleLogout} />
+          <LoginPage
+            onLogin={handleLogin}
+            onLogout={handleLogout}
+            userName={userName}
+          />
         )}
       </Container>
     </>

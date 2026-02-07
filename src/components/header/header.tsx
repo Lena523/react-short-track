@@ -7,7 +7,8 @@ import { LoginProps } from '../lib/types';
 export default function Header({
   onLogout,
   isVisible,
-}: Pick<LoginProps, 'onLogout'> & { isVisible: boolean }) {
+  user,
+}: Pick<LoginProps, 'onLogout'> & { isVisible: boolean; user: string }) {
   return (
     <Box
       component={'header'}
@@ -27,7 +28,7 @@ export default function Header({
           visibility: isVisible ? 'visible' : 'hidden',
         }}
       >
-        <UserName text={'Harry Potter'}></UserName>
+        <UserName text={user}></UserName>
         <LoginButton isDisabled={false} onClick={onLogout} action={'LOGOUT'} />
       </Box>
     </Box>

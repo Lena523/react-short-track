@@ -8,6 +8,7 @@ import {
   Grid,
   Stack,
 } from '@mui/material';
+import { useState } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ErrorMessage } from '@/pages';
@@ -25,9 +26,29 @@ export default function CourseFormModal({
   const {
     register,
     handleSubmit,
+    reset,
+    getValues,
     formState: { errors, isValid },
   } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const rawMinutes = Number(data.duration);
+    const hours = Math.floor(rawMinutes / 60);
+    const minutes = rawMinutes % 60;
+    data.duration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    console.log(data);
+    reset();
+  };
+  const [authors, setAuthors] = useState<string[]>([]);
+
+  const handleAuthorCreate: React.ComponentProps<'button'>['onClick'] = (e) => {
+    e.preventDefault();
+    const authorName = getValues('author');
+    if (authorName && authorName.length > 1) {
+      setAuthors((prev) => [...prev, authorName]);
+      reset({ author: '' });
+    }
+  };
 
   return (
     <Dialog open={isOpen} fullScreen={fullScreen} maxWidth={'md'}>
@@ -70,6 +91,7 @@ export default function CourseFormModal({
                 )}
                 <TextField
                   multiline
+                  minRows={4}
                   label="Description"
                   {...register('description', { required: true, minLength: 2 })}
                 />
@@ -96,33 +118,20 @@ export default function CourseFormModal({
                   >
                     <TextField
                       label="Duration"
+                      type="number"
+                      slotProps={{ htmlInput: { min: 1 } }}
                       {...register('duration', {
                         required: 'duration is required',
-                        pattern: {
-                          value: /^([0-9]{1,2}):([0-5][0-9])$/,
-                          message: 'Format must be hh:mm',
-                        },
-                        validate: (value) => {
-                          const val = value ? value : '';
-                          const [hours, minutes] = val.split(':').map(Number);
-                          const totalMinutes = hours * 60 + minutes;
-                          return totalMinutes > 0 || 'Duration must be > 0';
-                        },
                       })}
                     />
-                    {errors.duration && (
-                      <ErrorMessage
-                        textMessage={errors.duration.message ?? ''}
-                      />
+                    {errors.duration?.type === 'required' && (
+                      <ErrorMessage textMessage="duration is required" />
                     )}
-                    <Typography variant="body1">
-                      <b>00</b>:<b>00</b> hours
-                    </Typography>
                   </Box>
                 </Box>
-                <Grid container spacing={2}>
-                  <Grid size={8}>
-                    <Stack spacing={2}>
+                <Grid container spacing={6}>
+                  <Grid size={6}>
+                    <Stack spacing={1}>
                       <Typography
                         variant="subtitle1"
                         sx={{ fontSize: '1.1em', fontWeight: '700' }}
@@ -139,14 +148,25 @@ export default function CourseFormModal({
                       >
                         <TextField
                           label="Author Name"
-                          {...register('author')}
+                          {...register('author', {
+                            required: true,
+                            minLength: 2,
+                          })}
                         />
-                        <Button sx={{ flexShrink: 0 }}>CREATE AUTHOR</Button>
+                        {errors.author?.type === 'required' && (
+                          <ErrorMessage textMessage="author is required" />
+                        )}
+                        {errors.author?.type === 'minLength' && (
+                          <ErrorMessage textMessage="at least 2 characters" />
+                        )}
+                        <Button onClick={handleAuthorCreate}>
+                          CREATE AUTHOR
+                        </Button>
                       </Box>
-                      <AuthorsActiveList />
+                      <AuthorsActiveList authors={authors} />
                     </Stack>
                   </Grid>
-                  <Grid size={4}>
+                  <Grid size={6}>
                     <CourseAuthorsList />
                   </Grid>
                 </Grid>

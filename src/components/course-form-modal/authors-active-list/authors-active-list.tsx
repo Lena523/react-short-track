@@ -7,10 +7,8 @@ import {
   IconButton,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function AuthorsActiveList() {
-  const list: string[] = ['Valeriy Dubkin', 'Maksim Bard'];
+export default function AuthorsActiveList({ authors }: { authors: string[] }) {
   return (
     <Box>
       <Typography
@@ -22,7 +20,7 @@ export default function AuthorsActiveList() {
         Authors List
       </Typography>
       <List>
-        {list?.map((item, index) => (
+        {authors.map((item, index) => (
           <ListItem
             key={index}
             secondaryAction={
@@ -33,13 +31,6 @@ export default function AuthorsActiveList() {
                   onClick={() => console.log('', item)}
                 >
                   <AddIcon />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => console.log('', item)}
-                >
-                  <DeleteIcon />
                 </IconButton>
               </>
             }
