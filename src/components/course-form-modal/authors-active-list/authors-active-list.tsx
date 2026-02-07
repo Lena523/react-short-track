@@ -8,7 +8,13 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function AuthorsActiveList({ authors }: { authors: string[] }) {
+export default function AuthorsActiveList({
+  authors,
+  onAddCourseAuthor,
+}: {
+  authors: string[];
+  onAddCourseAuthor: (item: string) => void;
+}) {
   return (
     <Box>
       <Typography
@@ -28,14 +34,27 @@ export default function AuthorsActiveList({ authors }: { authors: string[] }) {
                 <IconButton
                   edge="end"
                   aria-label="add"
-                  onClick={() => console.log('', item)}
+                  onClick={() => onAddCourseAuthor(item)}
                 >
                   <AddIcon />
                 </IconButton>
               </>
             }
           >
-            <ListItemText primary={item} />
+            <ListItemText
+              primary={item}
+              slotProps={{
+                primary: {
+                  sx: {
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'block',
+                    maxWidth: 200,
+                  },
+                },
+              }}
+            />
           </ListItem>
         ))}
       </List>

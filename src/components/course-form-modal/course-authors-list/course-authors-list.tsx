@@ -8,8 +8,13 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function CourseAuthorsList() {
-  const list: string[] = ['Your list is emptffffffy'];
+export default function CourseAuthorsList({
+  courseAuthors,
+  onDeleteActiveAuthor,
+}: {
+  courseAuthors: string[];
+  onDeleteActiveAuthor: (item: string) => void;
+}) {
   return (
     <Box
       sx={{
@@ -25,7 +30,7 @@ export default function CourseAuthorsList() {
         Course Authors
       </Typography>
       <List>
-        {list.map((item, index) => (
+        {courseAuthors.map((item, index) => (
           <ListItem
             key={index}
             sx={{ display: 'flex', justifyContent: 'space-between' }}
@@ -34,14 +39,27 @@ export default function CourseAuthorsList() {
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => console.log('', item)}
+                  onClick={() => onDeleteActiveAuthor(item)}
                 >
                   <DeleteIcon />
                 </IconButton>
               </>
             }
           >
-            <ListItemText primary={item} sx={{ whiteSpace: 'nowrap' }} />
+            <ListItemText
+              primary={item}
+              slotProps={{
+                primary: {
+                  sx: {
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'block',
+                    maxWidth: 200,
+                  },
+                },
+              }}
+            />
           </ListItem>
         ))}
       </List>

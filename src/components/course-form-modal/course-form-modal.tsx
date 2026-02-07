@@ -36,10 +36,14 @@ export default function CourseFormModal({
     const hours = Math.floor(rawMinutes / 60);
     const minutes = rawMinutes % 60;
     data.duration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    data.author = courseAuthors.join(',');
     console.log(data);
+    setAuthors([]);
+    setCourseAuthors([]);
     reset();
   };
   const [authors, setAuthors] = useState<string[]>([]);
+  const [courseAuthors, setCourseAuthors] = useState<string[]>([]);
 
   const handleAuthorCreate: React.ComponentProps<'button'>['onClick'] = (e) => {
     e.preventDefault();
@@ -48,6 +52,31 @@ export default function CourseFormModal({
       setAuthors((prev) => [...prev, authorName]);
       reset({ author: '' });
     }
+  };
+
+  const handleAddToCourseAuthorList = (item: string) => {
+    if (item && item.length > 1) {
+      setCourseAuthors((prev) => [...prev, item]);
+      const activeAuthors = authors.filter((author) => author !== item);
+      setAuthors(activeAuthors);
+    }
+  };
+
+  const handleDeleteFromCourseAuthorList = (item: string) => {
+    if (item && item.length > 1) {
+      setAuthors((prev) => [...prev, item]);
+      const courseNewAuthors = courseAuthors.filter(
+        (author) => author !== item
+      );
+      setCourseAuthors(courseNewAuthors);
+    }
+  };
+
+  const handleClose = () => {
+    reset();
+    setAuthors([]);
+    setCourseAuthors([]);
+    onClose();
   };
 
   return (
@@ -130,7 +159,7 @@ export default function CourseFormModal({
                   </Box>
                 </Box>
                 <Grid container spacing={6}>
-                  <Grid size={6}>
+                  <Grid size={7}>
                     <Stack spacing={1}>
                       <Typography
                         variant="subtitle1"
@@ -149,13 +178,9 @@ export default function CourseFormModal({
                         <TextField
                           label="Author Name"
                           {...register('author', {
-                            required: true,
                             minLength: 2,
                           })}
                         />
-                        {errors.author?.type === 'required' && (
-                          <ErrorMessage textMessage="author is required" />
-                        )}
                         {errors.author?.type === 'minLength' && (
                           <ErrorMessage textMessage="at least 2 characters" />
                         )}
@@ -163,15 +188,21 @@ export default function CourseFormModal({
                           CREATE AUTHOR
                         </Button>
                       </Box>
-                      <AuthorsActiveList authors={authors} />
+                      <AuthorsActiveList
+                        authors={authors}
+                        onAddCourseAuthor={handleAddToCourseAuthorList}
+                      />
                     </Stack>
                   </Grid>
-                  <Grid size={6}>
-                    <CourseAuthorsList />
+                  <Grid size={5}>
+                    <CourseAuthorsList
+                      courseAuthors={courseAuthors}
+                      onDeleteActiveAuthor={handleDeleteFromCourseAuthorList}
+                    />
                   </Grid>
                 </Grid>
                 <DialogActions>
-                  <Button onClick={onClose}>CANCEL</Button>
+                  <Button onClick={handleClose}>CANCEL</Button>
                   <Button type="submit" disabled={!isValid}>
                     CREATE COURSE
                   </Button>
