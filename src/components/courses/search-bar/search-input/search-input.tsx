@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import type { InputElementProps } from '@/components/lib/types';
+import type { InputElementProps } from '@/components/lib/types/ui';
 
 export default function SearchInput({
   isDisabled,

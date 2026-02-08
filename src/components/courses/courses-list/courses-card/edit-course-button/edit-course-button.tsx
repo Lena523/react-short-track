@@ -1,6 +1,6 @@
 import { Button, Box } from '@mui/material';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
-import { ButtonElementProps } from '@/components/lib/types';
+import { ButtonElementProps } from '@/components/lib/types/ui';
 
 export default function EditCourseButton({
   isDisabled,

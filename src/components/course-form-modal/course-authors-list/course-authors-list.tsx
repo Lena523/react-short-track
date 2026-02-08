@@ -7,14 +7,12 @@ import {
   IconButton,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CourseAuthorsListProps } from '@/components/lib/types/domain';
 
 export default function CourseAuthorsList({
   courseAuthors,
   onDeleteActiveAuthor,
-}: {
-  courseAuthors: string[];
-  onDeleteActiveAuthor: (item: string) => void;
-}) {
+}: CourseAuthorsListProps) {
   return (
     <Box
       sx={{

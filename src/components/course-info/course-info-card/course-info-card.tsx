@@ -1,4 +1,4 @@
-import { CourseInfoCardProps } from '@/components/lib/types';
+import { CourseInfoCardProps } from '@/components/lib/types/domain';
 import Description from './description/description';
 import AuthorsList from './autors-list/authors-list';
 import CreationDate from './creation-date/creation-date';

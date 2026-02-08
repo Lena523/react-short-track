@@ -7,14 +7,12 @@ import {
   IconButton,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { AuthorsActiveListProps } from '@/components/lib/types/domain';
 
 export default function AuthorsActiveList({
   authors,
   onAddCourseAuthor,
-}: {
-  authors: string[];
-  onAddCourseAuthor: (item: string) => void;
-}) {
+}: AuthorsActiveListProps) {
   return (
     <Box>
       <Typography

@@ -1,5 +1,5 @@
 import { Typography, Box } from '@mui/material';
-import { CourseCardProps } from '@/components/lib/types';
+import { CourseCardProps } from '@/components/lib/types/domain';
 
 export default function Duration({
   duration,

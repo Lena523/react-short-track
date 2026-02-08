@@ -1,6 +1,6 @@
 import { Button, Box } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { ButtonElementProps } from '@/components/lib/types';
+import { ButtonElementProps } from '@/components/lib/types/ui';
 
 export default function DeleteCourseButton({
   isDisabled,

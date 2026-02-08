@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { ButtonElementProps } from '@/components/lib/types';
+import { ButtonElementProps } from '@/components/lib/types/ui';
 
 export default function LoginButton({
   action,

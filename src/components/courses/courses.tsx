@@ -12,37 +12,37 @@ import {
   findCourseById,
   deleteCourseById,
 } from '@/components/lib/utils';
-import { CardCourseHandler, MockedListProps } from '@/components/lib/types';
+import { CardCourseHandler } from '@/components/lib/types/domain';
+import { CourseProps } from '../lib/types/domain';
 
-export default function Courses() {
-  const [allCourses, setAllCourses] = useState<MockedListProps[]>(() => {
-    const saved = localStorage.getItem('courses');
-    return saved ? JSON.parse(saved) : [];
-  });
+export default function Courses({
+  courses,
+  isLoading,
+}: {
+  courses: CourseProps[];
+  isLoading?: boolean;
+}) {
   const [course, setCourse] = useState('');
-  const [newList, setNewList] = useState(allCourses);
-  const [showCourse, setShowCourse] = useState<MockedListProps | null>(null);
+  const [newList, setNewList] = useState(courses);
+  const [showCourse, setShowCourse] = useState<CourseProps | null>(null);
   const [createCourse, setCreateCourse] = useState(false);
-  const renderList = course.length === 0 ? allCourses : newList ? newList : [];
+  const renderList = course.length === 0 ? courses : newList ? newList : [];
 
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
-    if (value === '' && allCourses !== null) {
-      setAllCourses(allCourses);
-    }
     setCourse(value);
   };
 
   const handleSearchButton: React.ComponentProps<'button'>['onClick'] = (e) => {
     e.preventDefault();
-    if (allCourses) {
-      const foundCourse = findCourseByTitle(course, allCourses);
+    if (courses) {
+      const foundCourse = findCourseByTitle(course, courses);
       setNewList(foundCourse);
     }
   };
 
   const handleShowCourse: CardCourseHandler = (id: string) => {
-    if (allCourses) {
+    if (courses) {
       const course = findCourseById(id, renderList);
       setShowCourse(course);
     }
@@ -60,7 +60,6 @@ export default function Courses() {
         );
         localStorage.setItem('courses', JSON.stringify(newCourseList));
         if (newCourseList) {
-          setAllCourses(newCourseList);
           setNewList(newCourseList);
         }
       }
@@ -74,10 +73,12 @@ export default function Courses() {
   return (
     <>
       <CourseFormModal isOpen={createCourse} onClose={handleCreateNewCourse} />
-      {allCourses.length === 0 ? (
-        <EmptyCoursesList />
+      {isLoading ? (
+        <Box>Loading...</Box>
+      ) : courses.length === 0 ? (
+        <EmptyCoursesList handleCreateNewCourse={handleCreateNewCourse} />
       ) : showCourse ? (
-        <CourseInfoPage course={showCourse} />
+        <CourseInfoPage course={showCourse} courses={courses} />
       ) : (
         <Box
           sx={{
@@ -101,7 +102,7 @@ export default function Courses() {
               onClick={handleSearchButton}
             />
             <AddNewCourseButton
-              action={'ADD NEW COURSE'}
+              action="ADD NEW COURSE"
               onClick={handleCreateNewCourse}
               isDisabled={false}
             />
@@ -110,13 +111,17 @@ export default function Courses() {
             {renderList &&
               renderList.map((list) => (
                 <CourseCard
-                  id={list.id}
                   key={list.id}
-                  title={list.title}
-                  description={list.description}
-                  authors={list.authors}
-                  creationDate={list.creationDate}
-                  duration={list.duration}
+                  id={list.id}
+                  title={list.title ?? ''}
+                  description={list.description ?? ''}
+                  authors={list.authors ?? []}
+                  creationDate={
+                    list.creationDate ? String(list.creationDate) : ''
+                  }
+                  duration={
+                    typeof list.duration === 'string' ? list.duration : ''
+                  }
                   onShowCourse={handleShowCourse}
                   onDeleteCourse={handleDeleteCourse}
                 />

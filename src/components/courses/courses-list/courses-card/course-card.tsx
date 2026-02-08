@@ -7,7 +7,7 @@ import CreationDate from './creation-date/creation-date';
 import ShowCourseButton from './show-course-button/show-course-button';
 import DeleteCourseButton from './delete-course-button/delete-course-button';
 import EditCourseButton from './edit-course-button/edit-course-button';
-import { CourseCardProps } from '@/components/lib/types';
+import { CourseCardProps } from '@/components/lib/types/domain';
 
 export default function CourseCard({
   id,

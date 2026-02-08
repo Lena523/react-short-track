@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { BasicChildrenProps } from '@/components/lib/types';
+import { BasicChildrenProps } from '@/components/lib/types/ui';
 
 export default function CoursesList({ children }: BasicChildrenProps) {
   return (

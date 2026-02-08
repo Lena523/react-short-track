@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { ErrorMessageProps } from '@/components/lib/types';
+import { ErrorMessageProps } from '@/components/lib/types/ui';
 
 export default function ErrorMessage({ textMessage }: ErrorMessageProps) {
   return (

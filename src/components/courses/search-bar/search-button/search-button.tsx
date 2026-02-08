@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import type { ButtonElementProps } from '@/components/lib/types';
+import type { ButtonElementProps } from '@/components/lib/types/ui';
 
 export default function SearchButton({
   action,

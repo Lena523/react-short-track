@@ -1,14 +1,20 @@
 import { Header, Courses } from '@/components';
-import type { LoginProps } from '@/components/lib/types';
+import { CoursesPageProps } from '@/pages/types/pages';
+import { Box } from '@mui/material';
 
 export default function CoursesPage({
   onLogout,
   userName,
-}: Pick<LoginProps, 'onLogout'> & { userName: string }) {
+  courses,
+  isLoading,
+}: CoursesPageProps) {
+  if (isLoading) {
+    return <Box>Loading...</Box>;
+  }
   return (
     <>
       <Header onLogout={onLogout} isVisible={true} user={userName} />
-      <Courses />
+      <Courses courses={courses} isLoading={isLoading} />
     </>
   );
 }

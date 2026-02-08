@@ -1,7 +1,7 @@
 import SearchInput from './search-input/search-input';
 import SearchButton from './search-button/search-button';
 import { Box } from '@mui/material';
-import { SearchBarProps } from '@/components/lib/types';
+import { SearchBarProps } from '@/components/lib/types/ui';
 
 export default function SearchBar({ onChange, onClick }: SearchBarProps) {
   return (

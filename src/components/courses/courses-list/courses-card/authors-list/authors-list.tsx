@@ -1,4 +1,4 @@
-import { CourseCardProps } from '@/components/lib/types';
+import { CourseCardProps } from '@/components/lib/types/domain';
 import { Typography, Box } from '@mui/material';
 
 export default function AuthorsList({

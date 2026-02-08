@@ -1,10 +1,13 @@
 import { Box } from '@mui/material';
 import { Title, BackButton, CourseInfoCard } from '@/components/course-info';
-import { CourseInfoCardProps } from '@/components/lib/types';
+import { CourseInfoPageProps } from '@/pages/types/pages';
 import { useState } from 'react';
 import Courses from '@/components/courses/courses';
 
-export default function CourseInfoPage({ course }: CourseInfoCardProps) {
+export default function CourseInfoPage({
+  course,
+  courses,
+}: CourseInfoPageProps) {
   const [backToCourses, setBackToCourses] = useState(false);
 
   const handleBackToCourses = () => {
@@ -14,7 +17,7 @@ export default function CourseInfoPage({ course }: CourseInfoCardProps) {
   return (
     <>
       {backToCourses ? (
-        <Courses />
+        <Courses courses={courses} />
       ) : (
         <Box
           sx={{

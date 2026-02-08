@@ -15,12 +15,13 @@ import { ErrorMessage } from '@/pages';
 import { TextField, Button, Typography } from '@mui/material';
 import AuthorsActiveList from './authors-active-list/authors-active-list';
 import CourseAuthorsList from './course-authors-list/course-authors-list';
-import { Inputs, CourseFormModalprops } from '@/components/lib/types';
+import { Inputs, CourseFormModalProps } from '@/components/lib/types/domain';
+import { formatDuration } from '../lib/utils';
 
 export default function CourseFormModal({
   isOpen,
   onClose,
-}: CourseFormModalprops) {
+}: CourseFormModalProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const {
@@ -28,22 +29,24 @@ export default function CourseFormModal({
     handleSubmit,
     reset,
     getValues,
+    watch,
     formState: { errors, isValid },
   } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const rawMinutes = Number(data.duration);
-    const hours = Math.floor(rawMinutes / 60);
-    const minutes = rawMinutes % 60;
-    data.duration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-    data.author = courseAuthors.join(',');
-    console.log(data);
+    const payload = {
+      ...data,
+      duration: Number(data.duration),
+      authors: courseAuthors,
+    };
+    console.log(payload);
     setAuthors([]);
     setCourseAuthors([]);
     reset();
   };
   const [authors, setAuthors] = useState<string[]>([]);
   const [courseAuthors, setCourseAuthors] = useState<string[]>([]);
+  const durationValue = watch('duration');
 
   const handleAuthorCreate: React.ComponentProps<'button'>['onClick'] = (e) => {
     e.preventDefault();
@@ -156,6 +159,9 @@ export default function CourseFormModal({
                     {errors.duration?.type === 'required' && (
                       <ErrorMessage textMessage="duration is required" />
                     )}
+                    <Typography>
+                      {formatDuration(Number(durationValue))}
+                    </Typography>
                   </Box>
                 </Box>
                 <Grid container spacing={6}>

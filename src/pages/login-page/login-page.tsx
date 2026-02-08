@@ -1,6 +1,7 @@
 import { Header, Title } from '@/components';
 import { Box, Container, Button, TextField } from '@mui/material';
-import { LoginProps, Inputs } from '@/components/lib/types';
+import { Inputs } from '@/components/lib/types/domain';
+import { LoginPageProps } from '@/pages/types/pages';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import ErrorMessage from './error-message/error-message';
 
@@ -8,7 +9,7 @@ export default function LoginPage({
   onLogout,
   onLogin,
   userName,
-}: LoginProps & { userName: string }) {
+}: LoginPageProps) {
   const {
     register,
     handleSubmit,
