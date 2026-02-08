@@ -73,7 +73,7 @@ function App() {
         sx={{
           backgroundColor: '#D3D3D3',
           margin: '0 auto',
-          paddingBottom: '50px',
+          minHeight: '100vh',
         }}
       >
         {isLoggedIn ? (

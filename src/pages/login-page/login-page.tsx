@@ -28,8 +28,8 @@ export default function LoginPage({
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: '100vh',
           gap: '30px',
+          paddingTop: { xs: '30px', sm: '50px', md: '80px' },
         }}
       >
         <Title text={'Login'} />
@@ -40,7 +40,7 @@ export default function LoginPage({
               flexDirection: 'column',
               gap: '30px',
               alignItems: 'center',
-              padding: '60px 80px',
+              padding: { xs: '20px', sm: '40px', md: '60px 80px' },
               backgroundColor: '#FFFFFF',
               borderRadius: '4px',
             }}
