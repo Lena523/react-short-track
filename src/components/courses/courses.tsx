@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from './search-bar';
 import AddNewCourseButton from './add-new-course-button';
 import CoursesList from './courses-list';
@@ -11,11 +11,12 @@ import {
   findCourseByTitle,
   findCourseById,
   deleteCourseById,
+  defineCourseCardArguments,
 } from '@/components/lib/utils';
 import { CardCourseHandler } from '@/components/lib/types/domain';
 import { CourseProps } from '../lib/types/domain';
 import { CoursesProps } from '@/pages/types/pages';
-import { GetCourseById } from '@/api-services/api-requests';
+import { GetCourseById, GetAuthorsByIds } from '@/api-services/api-requests';
 
 export default function Courses({
   courses,
@@ -27,6 +28,21 @@ export default function Courses({
   const [showCourse, setShowCourse] = useState<CourseProps | null>(null);
   const [createCourse, setCreateCourse] = useState(false);
   const renderList = course.length === 0 ? courses : newList ? newList : [];
+
+  useEffect(() => {
+    const parts = window.location.pathname.split('/');
+    if (parts[1] === 'courses' && parts[2]) {
+      GetCourseById(parts[2]).then(setShowCourse);
+    }
+    window.addEventListener('popstate', () => {
+      const parts = window.location.pathname.split('/');
+      if (parts[1] === 'courses' && parts[2]) {
+        GetCourseById(parts[2]).then(setShowCourse);
+      } else {
+        setShowCourse(null);
+      }
+    });
+  }, []);
 
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
@@ -43,15 +59,22 @@ export default function Courses({
 
   const handleShowCourse: CardCourseHandler = async (id: string) => {
     try {
-      const courseToShow = await GetCourseById(id);
-      console.log(courseToShow);
-      setShowCourse(courseToShow);
+      console.log(id);
+      const course = await GetCourseById(id);
+      const authorsIds = course.authors;
+      const authorsDate = await GetAuthorsByIds(authorsIds);
+      const [resultToShow] = defineCourseCardArguments([course], authorsDate);
+      window.history.pushState({}, '', `/courses/${id}`);
+      if (resultToShow) {
+        setShowCourse(resultToShow);
+      }
     } catch (error) {
       console.error('Failed to fetch course', error);
     }
   };
 
   const handleBackToCourses = () => {
+    window.history.pushState({}, '', '/courses');
     setShowCourse(null);
   };
 

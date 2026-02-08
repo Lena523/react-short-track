@@ -1,12 +1,11 @@
-import { CoursePropsApi, AuthorsPropsApi } from '@/api-services/lib/types';
-import { CourseProps } from './types';
+import { AuthorsPropsApi } from '@/api-services/lib/types';
+import { CourseProps } from './types/domain';
 
 export function defineCourseCardArguments(
-  courseList: CoursePropsApi[],
+  courseList: CourseProps[],
   authorsList: AuthorsPropsApi[]
 ): CourseProps[] {
   return courseList.map((course) => ({
-    user: course.user,
     title: course.title,
     description: course.description,
     creationDate: formatDate(String(course.creationDate)),

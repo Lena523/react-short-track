@@ -16,7 +16,7 @@ import { TextField, Button, Typography } from '@mui/material';
 import AuthorsActiveList from './authors-active-list/authors-active-list';
 import CourseAuthorsList from './course-authors-list/course-authors-list';
 import { Inputs, CourseFormModalProps } from '@/components/lib/types/domain';
-import { CreateCourse } from '@/api-services/api-requests';
+import { CreateCourse, CreateAuthors } from '@/api-services/api-requests';
 import { formatDuration } from '../lib/utils';
 
 export default function CourseFormModal({
@@ -35,20 +35,26 @@ export default function CourseFormModal({
     formState: { errors, isValid },
   } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const payload = {
-      title: data.title,
-      description: data.description,
-      duration: Number(data.duration),
-      authors: courseAuthors,
-    };
-    CreateCourse(payload);
-    setAuthors([]);
-    setCourseAuthors([]);
-    reset();
-    onCreate();
-    onClose();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const createdAuthors = await CreateAuthors(courseAuthors);
+      const payload = {
+        title: data.title,
+        description: data.description,
+        duration: Number(data.duration),
+        authors: createdAuthors.map((a) => a.id),
+      };
+      await CreateCourse(payload);
+      setAuthors([]);
+      setCourseAuthors([]);
+      reset();
+      onCreate();
+      onClose();
+    } catch (error) {
+      console.error('Failed to create course with authors', error);
+    }
   };
+
   const [authors, setAuthors] = useState<string[]>([]);
   const [courseAuthors, setCourseAuthors] = useState<string[]>([]);
   const durationValue = watch('duration');

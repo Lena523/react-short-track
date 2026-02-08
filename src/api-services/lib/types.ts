@@ -3,6 +3,7 @@ export enum URL {
   COURSE = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/courses',
   GETAUTHORS = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/authors',
   IDCOURSE = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/courses/',
+  IDAUTHORS = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/authors/',
 }
 
 export interface LoginProps {

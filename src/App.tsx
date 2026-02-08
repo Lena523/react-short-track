@@ -11,6 +11,10 @@ function App() {
     return !!localStorage.getItem('tokenAuth');
   });
 
+  if (!isLoggedIn) {
+    window.history.pushState({}, '', '/login');
+  }
+
   const [userName, setUserName] = useState('');
   const [courses, setCourses] = useState<CourseProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,6 +52,7 @@ function App() {
       const user = await LoginUser();
       localStorage.setItem('tokenAuth', JSON.stringify(user.accessToken));
       setIsLoggedIn(true);
+      window.history.pushState({}, '', '/courses');
       if (data.user) {
         setUserName(data.user);
       }
@@ -68,6 +73,7 @@ function App() {
         sx={{
           backgroundColor: '#D3D3D3',
           margin: '0 auto',
+          paddingBottom: '50px',
         }}
       >
         {isLoggedIn ? (
