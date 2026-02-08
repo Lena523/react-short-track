@@ -19,7 +19,7 @@ export async function LoginUser(): Promise<LoginProps> {
 }
 
 export async function GetCourses(): Promise<CoursePropsApi[]> {
-  const response = await fetch(URL.GETCOURSES, {
+  const response = await fetch(URL.COURSE, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
@@ -42,4 +42,20 @@ export async function GetAuthors(): Promise<AuthorsPropsApi[]> {
   }
 
   return result as AuthorsPropsApi[];
+}
+
+export async function CreateCourse(
+  course: Omit<CoursePropsApi, 'id'>
+): Promise<CoursePropsApi[]> {
+  const response = await fetch(URL.COURSE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(course),
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || 'Getting courses failed');
+  }
+
+  return result as CoursePropsApi[];
 }

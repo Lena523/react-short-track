@@ -1,6 +1,6 @@
 export enum URL {
   LOGIN = 'https://dummyjson.com/auth/login',
-  GETCOURSES = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/courses',
+  COURSE = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/courses',
   GETAUTHORS = 'https://69873d4a8bacd1d773ece120.mockapi.io/api/authors',
 }
 
@@ -17,10 +17,8 @@ export interface LoginProps {
 }
 
 export interface CoursePropsApi {
-  user: string;
-  title: string;
-  description: string;
-  creationDate: Date;
+  title?: string;
+  description?: string;
   duration: number;
   authors: string[];
   id: string;

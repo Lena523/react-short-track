@@ -7,6 +7,7 @@ export type CoursesPageProps = {
   userName: string;
   courses: CourseProps[];
   isLoading: boolean;
+  handleCreateCourses: () => void;
 };
 
 export type CourseInfoPageProps = {
@@ -17,10 +18,11 @@ export type CourseInfoPageProps = {
 export type CoursesProps = {
   courses: CourseProps[];
   isLoading?: boolean;
+  handleCreateCourses: () => void;
 };
 
 export type EmptyCoursesListProps = {
-  handleCreateNewCourse: () => void;
+  onCreateNewCourse: () => void;
 };
 
 export type LoginPageProps = {

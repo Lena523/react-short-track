@@ -16,11 +16,13 @@ import { TextField, Button, Typography } from '@mui/material';
 import AuthorsActiveList from './authors-active-list/authors-active-list';
 import CourseAuthorsList from './course-authors-list/course-authors-list';
 import { Inputs, CourseFormModalProps } from '@/components/lib/types/domain';
+import { CreateCourse } from '@/api-services/api-requests';
 import { formatDuration } from '../lib/utils';
 
 export default function CourseFormModal({
   isOpen,
   onClose,
+  onCreate,
 }: CourseFormModalProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -35,14 +37,17 @@ export default function CourseFormModal({
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const payload = {
-      ...data,
+      title: data.title,
+      description: data.description,
       duration: Number(data.duration),
       authors: courseAuthors,
     };
-    console.log(payload);
+    CreateCourse(payload);
     setAuthors([]);
     setCourseAuthors([]);
     reset();
+    onCreate();
+    onClose();
   };
   const [authors, setAuthors] = useState<string[]>([]);
   const [courseAuthors, setCourseAuthors] = useState<string[]>([]);

@@ -29,6 +29,7 @@ export type Inputs = {
 export type CourseFormModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onCreate: () => void;
 };
 
 export type CourseAuthorsListProps = {

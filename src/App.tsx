@@ -36,6 +36,13 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const handleCreateCourses = async () => {
+    const newCoursesList = await GetCourses();
+    const newAutors = await GetAuthors();
+    const newResultList = defineCourseCardArguments(newCoursesList, newAutors);
+    setCourses(newResultList);
+  };
+
   const handleLogin = async ({ ...data }: Inputs) => {
     try {
       const user = await LoginUser();
@@ -60,7 +67,7 @@ function App() {
         disableGutters
         sx={{
           backgroundColor: '#D3D3D3',
-          height: '100vh',
+          margin: '0 auto',
         }}
       >
         {isLoggedIn ? (
@@ -69,6 +76,7 @@ function App() {
             userName={userName}
             courses={courses}
             isLoading={loading}
+            handleCreateCourses={handleCreateCourses}
           />
         ) : (
           <LoginPage

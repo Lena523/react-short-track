@@ -7,6 +7,7 @@ export default function CoursesPage({
   userName,
   courses,
   isLoading,
+  handleCreateCourses,
 }: CoursesPageProps) {
   if (isLoading) {
     return <Box>Loading...</Box>;
@@ -14,7 +15,11 @@ export default function CoursesPage({
   return (
     <>
       <Header onLogout={onLogout} isVisible={true} user={userName} />
-      <Courses courses={courses} isLoading={isLoading} />
+      <Courses
+        courses={courses}
+        isLoading={isLoading}
+        handleCreateCourses={handleCreateCourses}
+      />
     </>
   );
 }

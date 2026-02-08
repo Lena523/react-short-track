@@ -5,7 +5,7 @@ import AddNewCourseButton from './add-new-course-button/add-new-course-button';
 import { EmptyCoursesListProps } from '../../pages/types/pages';
 
 export default function EmptyCoursesList({
-  handleCreateNewCourse,
+  onCreateNewCourse,
 }: EmptyCoursesListProps) {
   return (
     <Box
@@ -23,7 +23,7 @@ export default function EmptyCoursesList({
       <AddNewCourseButton
         action={'ADD NEW COURSE'}
         isDisabled={false}
-        onClick={handleCreateNewCourse}
+        onClick={onCreateNewCourse}
       />
     </Box>
   );

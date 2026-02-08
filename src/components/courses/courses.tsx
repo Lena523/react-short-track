@@ -14,14 +14,13 @@ import {
 } from '@/components/lib/utils';
 import { CardCourseHandler } from '@/components/lib/types/domain';
 import { CourseProps } from '../lib/types/domain';
+import { CoursesProps } from '@/pages/types/pages';
 
 export default function Courses({
   courses,
   isLoading,
-}: {
-  courses: CourseProps[];
-  isLoading?: boolean;
-}) {
+  handleCreateCourses,
+}: CoursesProps) {
   const [course, setCourse] = useState('');
   const [newList, setNewList] = useState(courses);
   const [showCourse, setShowCourse] = useState<CourseProps | null>(null);
@@ -72,11 +71,15 @@ export default function Courses({
 
   return (
     <>
-      <CourseFormModal isOpen={createCourse} onClose={handleCreateNewCourse} />
+      <CourseFormModal
+        isOpen={createCourse}
+        onClose={handleCreateNewCourse}
+        onCreate={handleCreateCourses}
+      />
       {isLoading ? (
         <Box>Loading...</Box>
       ) : courses.length === 0 ? (
-        <EmptyCoursesList handleCreateNewCourse={handleCreateNewCourse} />
+        <EmptyCoursesList onCreateNewCourse={handleCreateNewCourse} />
       ) : showCourse ? (
         <CourseInfoPage course={showCourse} courses={courses} />
       ) : (
