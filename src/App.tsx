@@ -74,6 +74,7 @@ function App() {
           backgroundColor: '#D3D3D3',
           margin: '0 auto',
           minHeight: '100vh',
+          padding: '0 20px',
         }}
       >
         {isLoggedIn ? (

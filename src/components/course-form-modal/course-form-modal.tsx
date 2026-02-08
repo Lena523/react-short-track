@@ -5,7 +5,6 @@ import {
   DialogContent,
   useTheme,
   Box,
-  Grid,
   Stack,
 } from '@mui/material';
 import { useState } from 'react';
@@ -175,8 +174,14 @@ export default function CourseFormModal({
                     </Typography>
                   </Box>
                 </Box>
-                <Grid container spacing={6}>
-                  <Grid size={7}>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: '7fr 5fr' },
+                    gap: 6,
+                  }}
+                >
+                  <Box>
                     <Stack spacing={1}>
                       <Typography
                         variant="subtitle1"
@@ -210,14 +215,16 @@ export default function CourseFormModal({
                         onAddCourseAuthor={handleAddToCourseAuthorList}
                       />
                     </Stack>
-                  </Grid>
-                  <Grid size={5}>
+                  </Box>
+
+                  <Box>
                     <CourseAuthorsList
                       courseAuthors={courseAuthors}
                       onDeleteActiveAuthor={handleDeleteFromCourseAuthorList}
                     />
-                  </Grid>
-                </Grid>
+                  </Box>
+                </Box>
+
                 <DialogActions>
                   <Button onClick={handleClose}>CANCEL</Button>
                   <Button type="submit" disabled={!isValid}>

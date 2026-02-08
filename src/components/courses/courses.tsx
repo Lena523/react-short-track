@@ -134,6 +134,12 @@ export default function Courses({
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: '20px', sm: 0 },
+              '@media (max-width:650px)': {
+                flexDirection: 'column',
+                gap: '20px',
+              },
             }}
           >
             <SearchBar

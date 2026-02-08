@@ -33,7 +33,7 @@ export default function CourseCard({
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr',
+          gridTemplateColumns: { xs: '1fr', sm: '2fr 1fr' },
           gap: '30px',
         }}
       >
@@ -55,7 +55,7 @@ export default function CourseCard({
           </Box>
           <Box
             sx={{
-              display: 'flex',
+              display: { xs: 'none', sm: 'flex' },
               gap: '15px',
             }}
           >
@@ -74,6 +74,26 @@ export default function CourseCard({
             />
           </Box>
         </Box>
+      </Box>
+
+      <Box
+        sx={{
+          display: { xs: 'flex', sm: 'none' },
+          gap: '15px',
+          mt: 2,
+          justifyContent: 'center',
+        }}
+      >
+        <ShowCourseButton
+          action="SHOW COURSE"
+          isDisabled={false}
+          onClick={() => onShowCourse(id)}
+        />
+        <DeleteCourseButton
+          isDisabled={false}
+          onClick={() => onDeleteCourse(id)}
+        />
+        <EditCourseButton isDisabled={false} onClick={() => console.log('')} />
       </Box>
     </Box>
   );

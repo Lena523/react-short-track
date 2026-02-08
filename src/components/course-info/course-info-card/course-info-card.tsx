@@ -28,7 +28,7 @@ export default function CourseInfoCard({ course }: CourseInfoCardProps) {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
           gap: '30px',
         }}
       >
@@ -41,8 +41,8 @@ export default function CourseInfoCard({ course }: CourseInfoCardProps) {
             flexDirection: 'column',
             gap: '10px',
             justifyContent: 'flex-end',
-            borderLeft: '2px solid gray',
-            paddingLeft: '35px',
+            borderLeft: { xs: 'none', md: '2px solid gray' },
+            paddingLeft: { xs: 0, md: '35px' },
           }}
         >
           <Id id={course.id} />

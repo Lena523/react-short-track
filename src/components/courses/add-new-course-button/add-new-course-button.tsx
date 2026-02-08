@@ -7,7 +7,14 @@ export default function AddNewCourseButton({
   isDisabled,
 }: ButtonElementProps) {
   return (
-    <Button disabled={isDisabled} onClick={onClick}>
+    <Button
+      disabled={isDisabled}
+      onClick={onClick}
+      sx={{
+        alignSelf: { xs: 'center', sm: 'flex-start' },
+        width: { xs: '100%', sm: 'auto' },
+      }}
+    >
       {action}
     </Button>
   );
