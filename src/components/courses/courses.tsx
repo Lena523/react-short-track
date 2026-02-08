@@ -15,6 +15,7 @@ import {
 import { CardCourseHandler } from '@/components/lib/types/domain';
 import { CourseProps } from '../lib/types/domain';
 import { CoursesProps } from '@/pages/types/pages';
+import { GetCourseById } from '@/api-services/api-requests';
 
 export default function Courses({
   courses,
@@ -40,11 +41,18 @@ export default function Courses({
     }
   };
 
-  const handleShowCourse: CardCourseHandler = (id: string) => {
-    if (courses) {
-      const course = findCourseById(id, renderList);
-      setShowCourse(course);
+  const handleShowCourse: CardCourseHandler = async (id: string) => {
+    try {
+      const courseToShow = await GetCourseById(id);
+      console.log(courseToShow);
+      setShowCourse(courseToShow);
+    } catch (error) {
+      console.error('Failed to fetch course', error);
     }
+  };
+
+  const handleBackToCourses = () => {
+    setShowCourse(null);
   };
 
   const handleDeleteCourse: CardCourseHandler = (id: string) => {
@@ -81,7 +89,12 @@ export default function Courses({
       ) : courses.length === 0 ? (
         <EmptyCoursesList onCreateNewCourse={handleCreateNewCourse} />
       ) : showCourse ? (
-        <CourseInfoPage course={showCourse} courses={courses} />
+        <CourseInfoPage
+          course={showCourse}
+          courses={courses}
+          handleCreateCourses={handleCreateCourses}
+          handleBackToCourses={handleBackToCourses}
+        />
       ) : (
         <Box
           sx={{

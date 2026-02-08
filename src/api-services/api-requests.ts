@@ -1,5 +1,6 @@
 import { URL, LoginProps } from './lib/types';
 import { CoursePropsApi, AuthorsPropsApi } from './lib/types';
+import { CourseProps } from '@/components/lib/types/domain';
 
 export async function LoginUser(): Promise<LoginProps> {
   const response = await fetch(URL.LOGIN, {
@@ -38,7 +39,7 @@ export async function GetAuthors(): Promise<AuthorsPropsApi[]> {
   });
   const result = await response.json();
   if (!response.ok) {
-    throw new Error(result.message || 'Getting courses failed');
+    throw new Error(result.message || 'Getting authors failed');
   }
 
   return result as AuthorsPropsApi[];
@@ -58,4 +59,16 @@ export async function CreateCourse(
   }
 
   return result as CoursePropsApi[];
+}
+
+export async function GetCourseById(id: string): Promise<CourseProps> {
+  const response = await fetch(`${URL.IDCOURSE}${id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.message || 'Getting the course failed');
+  }
+  return result as CourseProps;
 }

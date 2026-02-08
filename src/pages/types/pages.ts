@@ -13,6 +13,8 @@ export type CoursesPageProps = {
 export type CourseInfoPageProps = {
   course: CourseProps;
   courses: CourseProps[];
+  handleCreateCourses: () => void;
+  handleBackToCourses: () => void;
 };
 
 export type CoursesProps = {

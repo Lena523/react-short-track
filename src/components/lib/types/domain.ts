@@ -1,6 +1,5 @@
 export type CourseProps = {
   id: string;
-  user: string;
   title: string;
   description: string;
   creationDate: string;
