@@ -1,6 +1,6 @@
 import { Header, Courses } from '@/components';
 import { CoursesPageProps } from '@/pages/types/pages';
-import { Box } from '@mui/material';
+import { Spinner } from '@/components/spinner';
 
 export default function CoursesPage({
   onLogout,
@@ -10,7 +10,7 @@ export default function CoursesPage({
   handleCreateCourses,
 }: CoursesPageProps) {
   if (isLoading) {
-    return <Box>Loading...</Box>;
+    return <Spinner />;
   }
   return (
     <>

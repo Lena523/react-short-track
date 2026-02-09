@@ -13,6 +13,7 @@ import {
   deleteCourseById,
   defineCourseCardArguments,
 } from '@/components/lib/utils';
+import { Spinner } from '../spinner';
 import { CardCourseHandler } from '@/components/lib/types/domain';
 import { CourseProps } from '../lib/types/domain';
 import { CoursesProps } from '@/pages/types/pages';
@@ -25,9 +26,10 @@ export default function Courses({
 }: CoursesProps) {
   const [course, setCourse] = useState('');
   const [newList, setNewList] = useState(courses);
+  const [searchActive, setSearchActive] = useState(false);
   const [showCourse, setShowCourse] = useState<CourseProps | null>(null);
   const [createCourse, setCreateCourse] = useState(false);
-  const renderList = course.length === 0 ? courses : newList ? newList : [];
+  const renderList = !searchActive ? courses : newList ? newList : [];
 
   useEffect(() => {
     const parts = window.location.pathname.split('/');
@@ -47,6 +49,9 @@ export default function Courses({
   const handleChosenCourse: React.ComponentProps<'input'>['onChange'] = (e) => {
     const value = e.target.value;
     setCourse(value);
+    if (value === '') {
+      setSearchActive(false);
+    }
   };
 
   const handleSearchButton: React.ComponentProps<'button'>['onClick'] = (e) => {
@@ -54,6 +59,7 @@ export default function Courses({
     if (courses) {
       const foundCourse = findCourseByTitle(course, courses);
       setNewList(foundCourse);
+      setSearchActive(true);
     }
   };
 
@@ -80,7 +86,6 @@ export default function Courses({
 
   const handleDeleteCourse: CardCourseHandler = (id: string) => {
     const courseToDelete = findCourseById(id, renderList);
-    console.log(courseToDelete);
     if (courseToDelete) {
       const courses = localStorage.getItem('courses');
       if (courses) {
@@ -108,7 +113,7 @@ export default function Courses({
         onCreate={handleCreateCourses}
       />
       {isLoading ? (
-        <Box>Loading...</Box>
+        <Spinner />
       ) : courses.length === 0 ? (
         <EmptyCoursesList onCreateNewCourse={handleCreateNewCourse} />
       ) : showCourse ? (
