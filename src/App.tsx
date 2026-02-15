@@ -1,7 +1,12 @@
-import './App.css';
+import { CssBaseline, Container } from '@mui/material';
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <CssBaseline />
+      <Container></Container>;
+    </>
+  );
 }
 
 export default App;
