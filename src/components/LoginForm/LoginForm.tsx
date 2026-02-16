@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import type { Inputs } from '@/types/login-form-types';
+import type { LoginInputs } from '@/types/login-register-types';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { FormContainer } from '@components/common/FormContainer/FormContainer';
+import { LoginUser } from '@/services/api/api';
+import { useState } from 'react';
 
 export default function LoginForm() {
   const {
@@ -13,11 +15,24 @@ export default function LoginForm() {
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm<Inputs>({ criteriaMode: 'all', mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<LoginInputs>({
+    criteriaMode: 'all',
+    mode: 'onChange',
+  });
+  const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
+    const newUser = await LoginUser({ email: data.email, password: data.password });
+
+    console.log(newUser);
+  };
+
+  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
 
   const handleReset = () => {
     reset();
+  };
+
+  const handleOpenRegisterForm = () => {
+    setIsRegisterFormOpen(!isRegisterFormOpen);
   };
 
   return (
@@ -57,9 +72,12 @@ export default function LoginForm() {
               error={!!errors.password}
               helperText={errors.password?.message}
             />
+            <Button variant="redButton" onClick={handleOpenRegisterForm}>
+              REGISTER
+            </Button>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'flex-end' }}>
-            <Button variant="blackButton" onClick={handleReset}>
+            <Button variant="blackButton" type="reset" onClick={handleReset}>
               RESET
             </Button>
             <Button variant="redButton" type="submit" disabled={!isValid}>
