@@ -10,35 +10,35 @@ import MoviePage from '@pages/MoviePage/MoviePage.tsx';
 import EditMoviePage from '@pages/ManageMoviePage/EditMoviePage/EditMoviePage.tsx';
 import CreateMoviePage from '@pages/ManageMoviePage/CreateMoviePage/CreateMoviePage.tsx';
 import LoginPage from '@pages/LoginPage/LoginPage.tsx';
+import NotFoundPage from '@pages/NotFoundPage/NotFoundPage.tsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
     element: <App />,
     children: [
       {
         path: '/',
         element: <HomePage />,
-        children: [
-          {
-            path: '/:movieId',
-            element: <MoviePage />,
-            children: [
-              {
-                path: '/:movieId/:edit-movie',
-                element: <EditMoviePage />,
-              },
-            ],
-          },
-          {
-            path: '/create-movie',
-            element: <CreateMoviePage />,
-          },
-        ],
       },
       {
-        path: '/login',
+        path: ':movieId',
+        element: <MoviePage />,
+      },
+      {
+        path: ':movieId/edit-movie',
+        element: <EditMoviePage />,
+      },
+      {
+        path: 'create-movie',
+        element: <CreateMoviePage />,
+      },
+      {
+        path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },
