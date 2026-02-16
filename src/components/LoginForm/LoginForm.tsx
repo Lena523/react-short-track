@@ -1,7 +1,10 @@
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import type { Inputs } from '@/types/login-form-types';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { FormContainer } from '@components/common/FormContainer/FormContainer';
 
 export default function LoginForm() {

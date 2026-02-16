@@ -12,7 +12,7 @@ export const themeOptions: ThemeOptions = {
       main: '#f50057',
     },
     background: {
-      default: '#525252',
+      default: '#555555',
     },
     text: {
       secondary: '#f65261',
@@ -119,7 +119,7 @@ export const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           maxWidth: '1200px',
-          backgroundColor: '#3A3A3A',
+          backgroundColor: '#424242',
           padding: '30px',
         },
       },

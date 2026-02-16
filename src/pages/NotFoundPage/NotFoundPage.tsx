@@ -1,5 +1,6 @@
-import { Typography, Container } from '@mui/material';
+import Container from '@mui/material/Container';
 import { Link } from 'react-router';
+import Typography from '@mui/material/Typography';
 
 export default function NotFoundPage() {
   return (
