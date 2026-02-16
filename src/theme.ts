@@ -60,11 +60,15 @@ export const themeOptions: ThemeOptions = {
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
           borderRadius: 6,
           textTransform: 'none',
           padding: '8px 20px',
-        },
+          width: '100%',
+          [theme.breakpoints.up('sm')]: {
+            width: '180px',
+          },
+        }),
       },
       defaultProps: {
         disableElevation: true,
@@ -74,11 +78,20 @@ export const themeOptions: ThemeOptions = {
       variants: [
         {
           props: { variant: 'redButton' },
-          style: { color: '#FFFFFF', backgroundColor: '#F65261' },
+          style: {
+            color: '#FFFFFF',
+            backgroundColor: '#F65261',
+            '&:hover': { backgroundColor: '#d44350' },
+          },
         },
         {
           props: { variant: 'blackButton' },
-          style: { border: '1px solid #F65261', color: '#F65261', backgroundColor: '#232323' },
+          style: {
+            border: '1px solid #F65261',
+            color: '#F65261',
+            backgroundColor: '#232323',
+            '&:hover': { backgroundColor: '#313131' },
+          },
         },
       ],
     },
@@ -98,6 +111,16 @@ export const themeOptions: ThemeOptions = {
           backgroundColor: '#232323',
           color: '#FFFFFF',
           padding: '2rem',
+        },
+      },
+    },
+
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: '1200px',
+          backgroundColor: '#3A3A3A',
+          padding: '30px',
         },
       },
     },

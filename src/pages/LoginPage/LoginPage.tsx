@@ -1,9 +1,10 @@
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
+import LoginForm from '@/components/LoginForm/LoginForm';
 
 export default function LoginPage() {
   return (
     <Container>
-      <Typography variant="h1">Login Page</Typography>
+      <LoginForm />
     </Container>
   );
 }
