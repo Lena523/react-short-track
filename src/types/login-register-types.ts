@@ -3,6 +3,13 @@ export type LoginInputs = {
   password: string;
 };
 
-export type RegisterInputs = LoginInputs & {
+export type RegisterInputs = {
   name: string;
+  email: string;
+  password: string;
+};
+
+export type RegisterFormProps = {
+  closeModal: () => void;
+  isOpen: boolean;
 };

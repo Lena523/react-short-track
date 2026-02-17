@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { FormContainer } from '@components/common/FormContainer/FormContainer';
 import { LoginUser } from '@/services/api/api';
 import { useState } from 'react';
+import RegisterForm from '@components/RegisterForm/RegisterForm';
 
 export default function LoginForm() {
   const {
@@ -86,6 +87,7 @@ export default function LoginForm() {
           </Box>
         </Box>
       </form>
+      <RegisterForm closeModal={handleOpenRegisterForm} isOpen={isRegisterFormOpen} />
     </FormContainer>
   );
 }

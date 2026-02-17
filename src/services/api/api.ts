@@ -22,13 +22,14 @@ export async function LoginUser({ email, password }: LoginInputs): Promise<Login
 }
 
 export async function RegisterUser({
+  name,
   email,
   password,
 }: RegisterInputs): Promise<RegisterUserResponseProps> {
   const response = await fetch(`${URLPATH}me/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email, password: password }),
+    body: JSON.stringify({ name: name, email: email, password: password }),
   });
 
   const result = await response.json();
