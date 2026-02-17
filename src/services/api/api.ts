@@ -3,7 +3,7 @@ import {
   type LoginUserResponseProps,
   type RegisterUserResponseProps,
 } from '@services/types/api-types';
-import type { LoginInputs, RegisterInputs } from '@/types/login-register-types';
+import type { LoginInputs, RegisterInputs } from '@/components/types/login-register-types';
 
 export async function LoginUser({ email, password }: LoginInputs): Promise<LoginUserResponseProps> {
   const response = await fetch(`${URLPATH}me/login`, {

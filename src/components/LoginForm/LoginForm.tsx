@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
-import type { LoginInputs } from '@/types/login-register-types';
+import type { LoginInputs } from '@/components/types/login-register-types';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -22,7 +22,11 @@ export default function LoginForm() {
   });
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     const newUser = await LoginUser({ email: data.email, password: data.password });
+    const {
+      data: { token },
+    } = newUser;
 
+    localStorage.setItem('userToken', JSON.stringify(token));
     console.log(newUser);
   };
 
@@ -64,6 +68,7 @@ export default function LoginForm() {
             />
             <TextField
               aria-label="PASSWORD"
+              type="password"
               placeholder="enter password"
               {...register('password', {
                 required: 'The password is required',

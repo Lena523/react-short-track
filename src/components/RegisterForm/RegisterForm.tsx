@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import type { RegisterInputs, RegisterFormProps } from '@/types/login-register-types';
+import type { RegisterInputs, RegisterFormProps } from '@/components/types/login-register-types';
 import { RegisterUser } from '@/services/api/api';
 
 export default function RegisterForm({ closeModal, isOpen }: RegisterFormProps) {
@@ -76,6 +76,7 @@ export default function RegisterForm({ closeModal, isOpen }: RegisterFormProps) 
             <TextField
               aria-label="PASSWORD"
               placeholder="enter password"
+              type="password"
               {...register('password', {
                 required: 'The password is required',
                 minLength: { value: 8, message: 'at least 8 symbols' },

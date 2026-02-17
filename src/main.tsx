@@ -11,30 +11,31 @@ import EditMoviePage from '@pages/ManageMoviePage/EditMoviePage/EditMoviePage.ts
 import CreateMoviePage from '@pages/ManageMoviePage/CreateMoviePage/CreateMoviePage.tsx';
 import LoginPage from '@pages/LoginPage/LoginPage.tsx';
 import NotFoundPage from '@pages/NotFoundPage/NotFoundPage.tsx';
+import { Provider } from 'react-redux';
+import { store } from '@store/store.ts';
+import { UserRoute, AdminRoute, LoginRoute } from './components/Guards/Gurds.tsx';
 
 const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       {
-        index: true,
-        element: <HomePage />,
+        element: <UserRoute />,
+        children: [
+          { index: true, element: <HomePage /> },
+          { path: ':movieId', element: <MoviePage /> },
+        ],
       },
       {
-        path: 'login',
-        element: <LoginPage />,
+        element: <AdminRoute />,
+        children: [
+          { path: 'create-movie', element: <CreateMoviePage /> },
+          { path: ':movieId/edit-movie', element: <EditMoviePage /> },
+        ],
       },
       {
-        path: 'create-movie',
-        element: <CreateMoviePage />,
-      },
-      {
-        path: ':movieId',
-        element: <MoviePage />,
-      },
-      {
-        path: ':movieId/edit-movie',
-        element: <EditMoviePage />,
+        element: <LoginRoute />,
+        children: [{ path: 'login', element: <LoginPage /> }],
       },
       {
         path: '*',
@@ -54,8 +55,10 @@ const theme = createTheme(themeOptions);
 
 createRoot(rootElement).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   </StrictMode>,
 );
