@@ -48,7 +48,7 @@ export const useAuthInitialization = () => {
     };
 
     fetchUser();
-  }, [token, dispatch, hasUserData, getCurrentUser]);
+  }, [token]);
 
   const showLoading = token && isLoading && !hasUserData;
 

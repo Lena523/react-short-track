@@ -5,6 +5,7 @@ import { Outlet } from 'react-router';
 import Header from '@components/Header/Header';
 import { useAuthInitialization } from './hooks/useAuthInitialization';
 import { ToastContainer } from 'react-tiny-toast';
+import Spinner from '@components/common/Spinner/Spinner';
 
 function App() {
   const { isLoading } = useAuthInitialization();
@@ -21,7 +22,7 @@ function App() {
       <CssBaseline />
       <Container>
         <Header />
-        {isLoading ? <div>Loading ...</div> : <Outlet />}
+        {isLoading ? <Spinner /> : <Outlet />}
       </Container>
       <ToastContainer />;
     </Box>
