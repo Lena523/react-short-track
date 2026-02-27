@@ -11,16 +11,16 @@ function App() {
   const { isLoading } = useAuthInitialization();
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}
-    >
+    <Box>
       <CssBaseline />
-      <Container>
+      <Container
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          gap: '10px',
+        }}
+      >
         <Header />
         {isLoading ? <Spinner /> : <Outlet />}
       </Container>

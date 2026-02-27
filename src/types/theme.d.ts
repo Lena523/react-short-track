@@ -4,5 +4,7 @@ declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     redButton: true;
     blackButton: true;
+    transparentButton: true;
+    circledButton: true;
   }
 }

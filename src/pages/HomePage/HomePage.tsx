@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 
 export default function HomePage() {
   return (
-    <Container>
+    <Container sx={{ backgroundColor: '#232323' }}>
       <Typography variant="h1">Home Page</Typography>
     </Container>
   );

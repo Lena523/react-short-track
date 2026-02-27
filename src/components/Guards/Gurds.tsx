@@ -8,8 +8,6 @@ export const UserRoute = () => {
   const role = useAppSelector((state) => state.user.role);
   const hasAccess = role === 'user' || role === 'admin';
 
-  console.log('isLoading:', isLoading, 'hasUserData:', hasAccess);
-
   if (isLoading) return <Spinner />;
 
   return isAuthenticated && hasAccess ? <Outlet /> : <Navigate to="/login" replace />;

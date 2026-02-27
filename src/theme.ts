@@ -80,6 +80,9 @@ export const themeOptions: ThemeOptions = {
           props: { variant: 'redButton' },
           style: {
             color: '#FFFFFF',
+            fontFamily: 'Monteserrat',
+            fontWeight: '500',
+            fontSize: '20px',
             backgroundColor: '#F65261',
             '&:hover': { backgroundColor: '#d44350' },
           },
@@ -90,21 +93,46 @@ export const themeOptions: ThemeOptions = {
             border: '1px solid #F65261',
             color: '#F65261',
             backgroundColor: '#232323',
+            fontFamily: 'Monteserrat',
+            fontWeight: '500',
+            fontSize: '20px',
             '&:hover': { backgroundColor: '#313131' },
+          },
+        },
+
+        {
+          props: { variant: 'transparentButton' },
+          style: {
+            color: '#F65261',
+            fontFamily: 'Monteserrat',
+            fontWeight: '500',
+            fontSize: '20px',
+            backgroundColor: 'rgba(96, 96, 96, 0.5)',
+            '&:hover': {
+              backgroundColor: 'rgba(49, 49, 49, 0.5)',
+            },
+          },
+        },
+
+        {
+          props: { variant: 'circledButton' },
+          style: {
+            color: '#F65261',
+            backgroundColor: 'rgba(96, 96, 96, 0.5)',
+            '&:hover': {
+              backgroundColor: 'rgba(49, 49, 49, 0.5)',
+            },
+            borderRadius: '50%',
+            minWidth: '50px !important',
+            maxWidth: '50px',
+            fontFamily: 'Monteserrat',
+            fontWeight: '500',
+            fontSize: '20px',
           },
         },
       ],
     },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiInputBase-root': {
-            backgroundColor: 'rgba(50, 50, 50, 0.95)',
-            borderRadius: 4,
-          },
-        },
-      },
-    },
+
     MuiDialog: {
       styleOverrides: {
         paper: {
@@ -119,8 +147,7 @@ export const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           maxWidth: '1200px',
-          backgroundColor: '#424242',
-          padding: '30px',
+          padding: '40px 30px',
         },
       },
     },
