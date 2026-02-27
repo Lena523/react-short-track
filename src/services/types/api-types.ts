@@ -3,7 +3,7 @@ export interface LoginUserResponseProps {
     id: number;
     name: string;
     email: string;
-    role: string;
+    role: 'user' | 'admin' | 'unknown';
     token: string;
   };
   message: string;
@@ -14,3 +14,16 @@ export interface RegisterUserResponseProps {
 }
 
 export const URLPATH = 'http://localhost:4000/';
+
+export type LoginUser = {
+  email: string;
+  password: string;
+};
+
+export type RegisterUser = LoginUser & {
+  name: string;
+};
+
+export type GetUserProps = {
+  token: string;
+};

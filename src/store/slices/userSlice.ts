@@ -1,32 +1,42 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { LoginUserResponseProps } from '@/services/types/api-types';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { UserState } from '@store/types/store-types';
 
-const initialState: LoginUserResponseProps = {
-  data: {
-    id: 0,
-    name: '',
-    email: '',
-    role: 'admin',
-    token: '',
-  },
-  message: '',
+const initialState: UserState = {
+  id: 0,
+  name: '',
+  email: '',
+  role: 'unknown',
+  isLoading: false,
+  isInitialized: false,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    admin: (state) => {
-      state.data.role = 'admin';
+    setAdmin: (state) => {
+      state.role = 'admin';
     },
-    user: (state) => {
-      state.data.role = 'user';
+    setUser: (state) => {
+      state.role = 'user';
     },
-    unknown: (state) => {
-      state.data.role = '';
+    setUnknown: (state) => {
+      state.role = 'unknown';
+    },
+    setUserData: (state, action: PayloadAction<Partial<UserState>>) => {
+      Object.assign(state, action.payload);
+      state.isInitialized = true;
+      state.isLoading = false;
+    },
+    setUserLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    clearUserData: (state) => {
+      Object.assign(state, initialState, { isInitialized: true });
     },
   },
 });
 
-export const { admin, user, unknown } = userSlice.actions;
+export const { setAdmin, setUser, setUnknown, setUserData, setUserLoading, clearUserData } =
+  userSlice.actions;
 export default userSlice.reducer;

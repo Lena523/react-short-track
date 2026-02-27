@@ -1,22 +1,21 @@
-import { useSelector } from 'react-redux';
 import { Outlet, Navigate } from 'react-router';
-import type { RootState } from '@/store/store';
+import { useAppSelector } from '@/store/hooks';
 
 export const UserRoute = () => {
-  const role = useSelector((state: RootState) => state.user.data?.role);
+  const role = useAppSelector((state) => state.user.role);
   const hasAccess = role === 'user' || role === 'admin';
 
   return hasAccess ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export const AdminRoute = () => {
-  const role = useSelector((state: RootState) => state.user.data?.role);
+  const role = useAppSelector((state) => state.user.role);
 
   return role === 'admin' ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export const LoginRoute = () => {
-  const role = useSelector((state: RootState) => state.user.data?.role);
+  const role = useAppSelector((state) => state.user.role);
 
   return role === 'unknown' ? <Outlet /> : <Navigate to="/" replace />;
 };

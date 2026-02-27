@@ -6,11 +6,14 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { FormContainer } from '@components/common/FormContainer/FormContainer';
-import { LoginUser } from '@/services/api/api';
+import { useGetUserMutation } from '@/services/api/apiSlice';
 import { useState } from 'react';
+import { setAdmin, setUser, setUserData, setUserLoading } from '@/store/slices/userSlice';
 import RegisterForm from '@components/RegisterForm/RegisterForm';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 export default function LoginForm() {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -20,16 +23,39 @@ export default function LoginForm() {
     criteriaMode: 'all',
     mode: 'onChange',
   });
-  const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
-    const newUser = await LoginUser({ email: data.email, password: data.password });
-    const {
-      data: { token },
-    } = newUser;
+  const [getUser] = useGetUserMutation();
+  const onSubmit: SubmitHandler<LoginInputs> = async (user) => {
+    try {
+      dispatch(setUserLoading(true));
+      const newUser = await getUser({ email: user.email, password: user.password }).unwrap();
+      const token = newUser.data?.token;
 
-    localStorage.setItem('userToken', JSON.stringify(token));
-    console.log(newUser);
+      dispatch(
+        setUserData({
+          id: newUser.data.id,
+          name: newUser.data.name,
+          email: newUser.data.email,
+          role: newUser.data.role,
+        }),
+      );
+
+      localStorage.setItem('userToken', token);
+
+      if (newUser.data.role === 'admin') {
+        dispatch(setAdmin());
+      } else if (newUser.data.role === 'user') {
+        dispatch(setUser());
+      }
+
+      reset();
+    } catch (error) {
+      reset();
+      dispatch(setUserLoading(false));
+      console.error('Login failed', error);
+    }
   };
 
+  const userLoading = useAppSelector((state) => state.user.isLoading);
   const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
 
   const handleReset = () => {
@@ -65,6 +91,7 @@ export default function LoginForm() {
               })}
               error={!!errors.email}
               helperText={errors.email?.message}
+              disabled={userLoading}
             />
             <TextField
               aria-label="PASSWORD"
@@ -77,17 +104,18 @@ export default function LoginForm() {
               })}
               error={!!errors.password}
               helperText={errors.password?.message}
+              disabled={userLoading}
             />
-            <Button variant="redButton" onClick={handleOpenRegisterForm}>
-              REGISTER
+            <Button variant="redButton" type="submit" disabled={!isValid || userLoading}>
+              {userLoading ? 'LOGGING IN...' : 'LOGIN'}
             </Button>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'flex-end' }}>
-            <Button variant="blackButton" type="reset" onClick={handleReset}>
+            <Button variant="blackButton" type="reset" onClick={handleReset} disabled={userLoading}>
               RESET
             </Button>
-            <Button variant="redButton" type="submit" disabled={!isValid}>
-              LOGIN
+            <Button variant="redButton" onClick={handleOpenRegisterForm} disabled={userLoading}>
+              REGISTER
             </Button>
           </Box>
         </Box>

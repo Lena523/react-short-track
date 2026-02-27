@@ -1,7 +1,8 @@
-import type { LoginUserResponseProps } from '@/services/types/api-types';
-
 export interface UserState {
-  data: LoginUserResponseProps;
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'unknown';
   isLoading: boolean;
   isInitialized: boolean;
 }
