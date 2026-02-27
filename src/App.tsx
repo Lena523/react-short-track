@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { Outlet } from 'react-router';
 import Header from '@components/Header/Header';
 import { useAuthInitialization } from './hooks/useAuthInitialization';
+import { ToastContainer } from 'react-tiny-toast';
 
 function App() {
   const { isLoading } = useAuthInitialization();
@@ -22,7 +23,7 @@ function App() {
         <Header />
         {isLoading ? <div>Loading ...</div> : <Outlet />}
       </Container>
-      ;
+      <ToastContainer />;
     </Box>
   );
 }

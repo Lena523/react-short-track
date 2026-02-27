@@ -31,4 +31,7 @@ export default defineConfig({
       },
     },
   },
+  optimizeDeps: {
+    include: ['react-tiny-toast'],
+  },
 });

@@ -8,9 +8,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import type { RegisterInputs, RegisterFormProps } from '@/components/types/login-register-types';
-import { RegisterUser } from '@/services/api/api';
+import { useRegisterUserMutation } from '@/services/api/apiSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { setUserLoading } from '@/store/slices/userSlice';
 
 export default function RegisterForm({ closeModal, isOpen }: RegisterFormProps) {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const {
@@ -22,14 +25,17 @@ export default function RegisterForm({ closeModal, isOpen }: RegisterFormProps) 
     criteriaMode: 'all',
     mode: 'onChange',
   });
+  const [registerUser, message] = useRegisterUserMutation();
   const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
-    const newUser = await RegisterUser({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    });
-
-    console.log(newUser);
+    try {
+      dispatch(setUserLoading(true));
+      await registerUser({ name: data.name, email: data.email, password: data.password });
+      dispatch(setUserLoading(false));
+      reset();
+      closeModal();
+    } catch {
+      console.error(message);
+    }
   };
 
   const handleReset = () => {
