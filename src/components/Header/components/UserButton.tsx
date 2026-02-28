@@ -4,10 +4,15 @@ import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { useAuthInitialization } from '@/hooks/useAuthInitialization';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { clearUserData } from '@/store/slices/userSlice';
+import { useNavigate } from 'react-router';
 
 export default function UserButton() {
-  const { role } = useAuthInitialization();
+  const { name } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const firstLetterOfUserName = name?.trim().charAt(0);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -16,12 +21,11 @@ export default function UserButton() {
   };
 
   const handleClose = () => {
+    dispatch(clearUserData());
+    localStorage.removeItem('userToken');
+    navigate('/login');
     setOpen(false);
   };
-
-  if (role === 'unknown') {
-    return null;
-  }
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -33,7 +37,7 @@ export default function UserButton() {
           variant="circledButton"
           onClick={handleClick}
         >
-          J
+          {firstLetterOfUserName}
         </Button>
         <Popper
           id="logout-popper"
@@ -51,7 +55,7 @@ export default function UserButton() {
             }}
           >
             <Typography variant="subtitle1" sx={{ p: 2 }}>
-              JOHN
+              {name}
             </Typography>
             <Button
               fullWidth
