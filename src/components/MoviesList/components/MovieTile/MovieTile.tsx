@@ -91,7 +91,7 @@ export default function MovieTile({ movie }: MovieTileProps) {
 
       <CardContent sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          <Typography variant="subtitle1" sx={{ color: '#999999' }} component="div">
+          <Typography variant="body2" sx={{ color: '#999999' }} component="div">
             {movie.title}
           </Typography>
           <Typography
@@ -101,7 +101,7 @@ export default function MovieTile({ movie }: MovieTileProps) {
             {movie.release_date}
           </Typography>
         </Box>
-        <Typography variant="body2" sx={{ color: '#999999' }}>
+        <Typography variant="subtitle2" sx={{ color: '#999999' }}>
           {movie.genres}
         </Typography>
       </CardContent>

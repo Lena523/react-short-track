@@ -30,10 +30,15 @@ const movieSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    setMoviesData: (state, action: PayloadAction<Movie[]>) => {
+      state.data = action.payload;
+      state.isLoading = false;
+    },
   },
 });
 
-export const { getMoviesFailure, getMoviesStart, getMoviesSuccess } = movieSlice.actions;
+export const { getMoviesFailure, getMoviesStart, getMoviesSuccess, setMoviesData } =
+  movieSlice.actions;
 export const selectMovies = (state: { movie: MoviesState }) => state.movie.data;
 export const selectMoviesLoading = (state: { movie: MoviesState }) => state.movie.isLoading;
 export const selectMoviesError = (state: { movie: MoviesState }) => state.movie.error;
