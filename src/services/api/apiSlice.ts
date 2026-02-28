@@ -5,6 +5,7 @@ import type {
   LoginUserResponseProps,
   GetUserProps,
   RegisterUserResponseProps,
+  ApiMoviesResponse,
 } from '../api-types';
 export type { LoginUserResponseProps };
 import type { AppStartListening } from '@/services/api/listnerMiddleware';
@@ -34,10 +35,27 @@ export const sliceApi = createApi({
         body: initialPost,
       }),
     }),
+    getMovies: builder.query<ApiMoviesResponse, null>({
+      query: () => ({
+        url: 'movies',
+        method: 'GET',
+      }),
+    }),
+    getMovieById: builder.query<ApiMoviesResponse, number>({
+      query: (id) => ({
+        url: `movies/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useGetUserMutation, useRegisterUserMutation, useGetCurrentUserMutation } = sliceApi;
+export const {
+  useGetUserMutation,
+  useRegisterUserMutation,
+  useGetCurrentUserMutation,
+  useGetMoviesQuery,
+} = sliceApi;
 
 export const addUserListners = (startAppListening: AppStartListening) => {
   startAppListening({
@@ -90,6 +108,21 @@ export const addUserListners = (startAppListening: AppStartListening) => {
     effect: async (_action, listnerApi) => {
       const { toast } = await import('react-tiny-toast');
       const toastId = toast.show('You are registered, login please', {
+        variant: 'warning',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.getMovies.matchRejected,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('Failed to load some movies posters', {
         variant: 'warning',
         position: 'bottom-right',
         pause: true,

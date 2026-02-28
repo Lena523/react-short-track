@@ -6,3 +6,11 @@ export interface UserState {
   isLoading: boolean;
   isInitialized: boolean;
 }
+
+export interface Movie {
+  title: string;
+  release_date: string;
+  poster_path: string;
+  genres: string[];
+  id: number;
+}

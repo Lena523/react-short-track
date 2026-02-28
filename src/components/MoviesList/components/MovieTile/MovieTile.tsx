@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import { useAppSelector } from '@/store/hooks';
+import type { Movie } from '@/store/store-types';
 
 const menuItemSx = {
   '&:hover': {
@@ -17,7 +18,11 @@ const menuItemSx = {
   },
 };
 
-export default function MovieTile() {
+type MovieTileProps = {
+  movie: Movie;
+};
+
+export default function MovieTile({ movie }: MovieTileProps) {
   const role = useAppSelector((state) => state.user.role);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,6 +33,20 @@ export default function MovieTile() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [imgSrc, setImgSrc] = useState(() => {
+    if (!movie.poster_path) return '/movie.jpg';
+
+    if (movie.poster_path.startsWith('http')) {
+      return `https://images.weserv.nl/?url=${encodeURIComponent(movie.poster_path)}`;
+    }
+
+    return `https://images.weserv.nl/?url=${encodeURIComponent(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)}`;
+  });
+
+  const handleError = () => {
+    setImgSrc('/movie.jpg');
   };
 
   return (
@@ -47,9 +66,10 @@ export default function MovieTile() {
         <CardMedia
           component="img"
           height="400"
-          image={'/movie.jpg'}
+          image={imgSrc}
           alt={'title'}
           sx={{ objectFit: 'cover' }}
+          onError={handleError}
         />
 
         {role === 'admin' && (
@@ -72,17 +92,17 @@ export default function MovieTile() {
       <CardContent sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           <Typography variant="subtitle1" sx={{ color: '#999999' }} component="div">
-            title
+            {movie.title}
           </Typography>
           <Typography
             variant="body2"
             sx={{ color: '#999999', border: '1px solid #999999', px: 1, py: 0.5 }}
           >
-            2025
+            {movie.release_date}
           </Typography>
         </Box>
         <Typography variant="body2" sx={{ color: '#999999' }}>
-          genres
+          {movie.genres}
         </Typography>
       </CardContent>
     </Card>

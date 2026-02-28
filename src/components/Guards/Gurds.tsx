@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from 'react-router';
 import { useAppSelector } from '@/store/hooks';
 import Spinner from '@/components/common/Spinner/Spinner';
+import { selectUser } from '@/store/slices/userSlice';
 
 export const UserRoute = () => {
-  const { role, isLoading, isInitialized } = useAppSelector((state) => state.user);
+  const { role, isLoading, isInitialized } = useAppSelector(selectUser);
   const token = localStorage.getItem('userToken');
 
   const isAuthenticated = role !== 'unknown';

@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '@store/slices/userSlice';
 import { sliceApi } from '@/services/api/apiSlice';
 import { listenerMiddleware } from '@services/api/listnerMiddleware';
+import movieReducer from '@store/slices/movieSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    movie: movieReducer,
     [sliceApi.reducerPath]: sliceApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -7,9 +7,10 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { clearUserData } from '@/store/slices/userSlice';
 import { useNavigate } from 'react-router';
+import { selectUserName } from '@/store/slices/userSlice';
 
 export default function UserButton() {
-  const { name } = useAppSelector((state) => state.user);
+  const name = useAppSelector(selectUserName);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const firstLetterOfUserName = name?.trim().charAt(0);

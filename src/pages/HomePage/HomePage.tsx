@@ -1,10 +1,10 @@
 import Container from '@mui/material/Container';
-import MovieForm from '@/components/MovieForm/MovieForm';
+import MovieContainer from '@/components/Header/components/MoviesContainer/MoviesContainer';
 
 export default function HomePage() {
   return (
     <Container sx={{ backgroundColor: '#232323' }}>
-      <MovieForm />
+      <MovieContainer />
     </Container>
   );
 }

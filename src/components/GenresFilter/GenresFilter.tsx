@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function GenresFilter() {
   const [activeGenre, setActiveGenre] = useState('ALL');
 
-  const genres = ['ALL', 'DOCUMENTARY', 'HORROR', 'CRIME'];
+  const genres = ['ALL', 'DOCUMENTARY', 'HORROR', 'CRIME', 'COMEDY', 'DRAMA', 'ROMANCE'];
 
   return (
     <ButtonGroup sx={{ color: '#FFFFFF' }} variant="text" aria-label="Basic button group">
