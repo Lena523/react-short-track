@@ -4,8 +4,10 @@ import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import Typography from '@mui/material/Typography';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { useAuthInitialization } from '@/hooks/useAuthInitialization';
 
 export default function UserButton() {
+  const { role } = useAuthInitialization();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -16,6 +18,10 @@ export default function UserButton() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  if (role === 'unknown') {
+    return null;
+  }
 
   return (
     <ClickAwayListener onClickAway={handleClose}>

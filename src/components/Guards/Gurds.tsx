@@ -1,32 +1,41 @@
 import { Outlet, Navigate } from 'react-router';
 import { useAppSelector } from '@/store/hooks';
-import { useAuthInitialization } from '@/hooks/useAuthInitialization';
-import Spinner from '@components/common/Spinner/Spinner';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 export const UserRoute = () => {
-  const { isLoading, isAuthenticated } = useAuthInitialization();
-  const role = useAppSelector((state) => state.user.role);
+  const { role, isLoading, isInitialized } = useAppSelector((state) => state.user);
+  const token = localStorage.getItem('userToken');
+
+  const isAuthenticated = role !== 'unknown';
   const hasAccess = role === 'user' || role === 'admin';
 
-  if (isLoading) return <Spinner />;
+  if (!token) return <Navigate to="/login" replace />;
+
+  if (!isInitialized || isLoading) return <Spinner />;
 
   return isAuthenticated && hasAccess ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export const AdminRoute = () => {
-  const { isLoading } = useAuthInitialization();
-  const role = useAppSelector((state) => state.user.role);
+  const { role, isLoading, isInitialized } = useAppSelector((state) => state.user);
+  const token = localStorage.getItem('userToken');
 
-  if (isLoading) return <Spinner />;
+  if (!token) return <Navigate to="/login" replace />;
+
+  if (!isInitialized || isLoading) return <Spinner />;
 
   return role === 'admin' ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 export const LoginRoute = () => {
-  const { isLoading, isAuthenticated } = useAuthInitialization();
-  const role = useAppSelector((state) => state.user.role);
+  const { role, isLoading, isInitialized } = useAppSelector((state) => state.user);
+  const token = localStorage.getItem('userToken');
 
-  if (isLoading) return <Spinner />;
+  if (token && isInitialized && !isLoading) {
+    if (role !== 'unknown') return <Navigate to="/" replace />;
+  }
 
-  return !isAuthenticated && role === 'unknown' ? <Outlet /> : <Navigate to="/" replace />;
+  if (!isInitialized || isLoading) return <Spinner />;
+
+  return <Outlet />;
 };

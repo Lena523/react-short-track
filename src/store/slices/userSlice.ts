@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { UserState } from '@store/types/store-types';
+import type { UserState } from '@/store/store-types';
 
 const initialState: UserState = {
   id: 0,
@@ -22,6 +22,8 @@ const userSlice = createSlice({
     },
     setUnknown: (state) => {
       state.role = 'unknown';
+      state.isInitialized = true;
+      state.isLoading = false;
     },
     setUserData: (state, action: PayloadAction<Partial<UserState>>) => {
       Object.assign(state, action.payload);

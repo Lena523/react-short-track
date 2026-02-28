@@ -5,7 +5,7 @@ import type {
   LoginUserResponseProps,
   GetUserProps,
   RegisterUserResponseProps,
-} from '../types/api-types';
+} from '../api-types';
 export type { LoginUserResponseProps };
 import type { AppStartListening } from '@/services/api/listnerMiddleware';
 

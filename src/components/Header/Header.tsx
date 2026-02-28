@@ -1,14 +1,19 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import HeaderContainer from '@/components/Header/HeaderContainer';
-import InputSearch from './SearchBlock';
-import UserLogout from './UserButton';
-import Button from '@mui/material/Button';
+import HeaderContainer from '@/components/Header/components/HeaderContainer';
+import InputSearch from './components/SearchBlock';
+import UserLogout from './components/UserButton';
+import AddMovieButton from './components/AddMovieButton';
+import useCheckLocation from '@/hooks/useCheckLocation';
+import { Fragment } from 'react/jsx-runtime';
+import Logo from './components/Logo';
 
 export default function Header() {
+  const isHomePage = useCheckLocation();
+  const Wrapper = isHomePage ? HeaderContainer : Fragment;
+
   return (
     <Box sx={{ position: 'sticky', top: 0, zIndex: 1200 }}>
-      <HeaderContainer>
+      <Wrapper>
         <Box
           sx={{
             display: 'flex',
@@ -18,19 +23,14 @@ export default function Header() {
             marginBottom: '50px',
           }}
         >
-          <Box>
-            <img src="logo.svg" alt="logo"></img>
-          </Box>
+          <Logo />
           <Box sx={{ display: 'flex', gap: '15px' }}>
-            <Button variant="transparentButton">+ ADD MOVIE</Button>
+            <AddMovieButton />
             <UserLogout />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '40px', paddingLeft: '60px' }}>
-          <Typography variant="h1">FIND YOUR MOVIE</Typography>
-          <InputSearch />
-        </Box>
-      </HeaderContainer>
+        <InputSearch />
+      </Wrapper>
     </Box>
   );
 }
