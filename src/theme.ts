@@ -23,38 +23,46 @@ export const themeOptions: ThemeOptions = {
     h1: {
       letterSpacing: '0.06em',
       fontSize: '2.5rem',
+      fontFamily: 'Monteserrat',
     },
     h6: {
       fontSize: '1.7rem',
       fontWeight: 300,
       letterSpacing: '0.07em',
+      fontFamily: 'Monteserrat',
     },
     subtitle1: {
-      fontSize: '1.1rem',
+      fontSize: '1.25rem',
       letterSpacing: '0em',
       fontWeight: 500,
+      fontFamily: 'Monteserrat',
     },
     subtitle2: {
       fontSize: '1rem',
       letterSpacing: '0em',
+      fontFamily: 'Monteserrat',
     },
     body1: {
       letterSpacing: '0em',
+      fontFamily: 'Monteserrat',
     },
     body2: {
       fontSize: '1rem',
       fontWeight: 600,
       letterSpacing: '0em',
+      fontFamily: 'Monteserrat',
     },
     caption: {
       fontSize: '0.9em',
       fontWeight: 500,
       letterSpacing: '0em',
+      fontFamily: 'Monteserrat',
     },
     button: {
       fontSize: '1.2rem',
       fontWeight: 600,
       letterSpacing: '0em',
+      fontFamily: 'Monteserrat',
     },
   },
   components: {

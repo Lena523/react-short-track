@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
-import HeaderContainer from '@/components/Header/components/HeaderContainer';
-import InputSearch from './components/SearchBlock';
-import UserLogout from './components/UserButton';
-import AddMovieButton from './components/AddMovieButton';
+import HeaderContainer from '@/components/Header/components/HeaderContainer/HeaderContainer';
+import InputSearch from './components/SearchBlock/SearchBlock';
+import UserLogout from './components/UserButton/UserButton';
+import AddMovieButton from './components/AddMovieButton/AddMovieButton';
 import useCheckLocation from '@/hooks/useCheckLocation';
 import { Fragment } from 'react/jsx-runtime';
-import Logo from './components/Logo';
+import Logo from './components/Logo/Logo';
 
 export default function Header() {
   const isHomePage = useCheckLocation();

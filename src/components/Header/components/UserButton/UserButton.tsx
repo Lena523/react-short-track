@@ -20,15 +20,19 @@ export default function UserButton() {
     setOpen(!open);
   };
 
-  const handleClose = () => {
+  const handleLogout = () => {
     dispatch(clearUserData());
     localStorage.removeItem('userToken');
     navigate('/login');
     setOpen(false);
   };
 
+  const handleClickAway = () => {
+    setOpen(false);
+  };
+
   return (
-    <ClickAwayListener onClickAway={handleClose}>
+    <ClickAwayListener onClickAway={handleClickAway}>
       <Box sx={{ position: 'relative', zIndex: 1300 }}>
         <Button
           ref={anchorRef}
@@ -54,14 +58,30 @@ export default function UserButton() {
               mt: 1,
             }}
           >
-            <Typography variant="subtitle1" sx={{ p: 2 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                p: 2,
+                cursor: 'pointer',
+                '&:hover': {
+                  bgcolor: '#f65261',
+                },
+              }}
+            >
               {name}
             </Typography>
             <Button
               fullWidth
-              variant="redButton"
-              onClick={handleClose}
-              sx={{ display: 'flex', justifyContent: 'flex-start' }}
+              variant="blackButton"
+              onClick={handleLogout}
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                '&:hover': {
+                  bgcolor: '#f65261',
+                  color: '#FFFFFF',
+                },
+              }}
             >
               LOGOUT
             </Button>

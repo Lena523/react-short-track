@@ -1,10 +1,10 @@
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import MovieForm from '@/components/MovieForm/MovieForm';
 
 export default function HomePage() {
   return (
     <Container sx={{ backgroundColor: '#232323' }}>
-      <Typography variant="h1">Home Page</Typography>
+      <MovieForm />
     </Container>
   );
 }
