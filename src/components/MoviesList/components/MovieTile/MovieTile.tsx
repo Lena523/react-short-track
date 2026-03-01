@@ -88,7 +88,7 @@ export default function MovieTile({ movie }: MovieTileProps) {
             maxWidth: '200px',
           }}
         >
-          {movie.genres.join(', ')}
+          {movie.genres?.join(', ') || 'No genres'}
         </Typography>
       </CardContent>
     </Card>
