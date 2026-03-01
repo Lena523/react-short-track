@@ -79,7 +79,11 @@ export const sliceApi = createApi({
 
           dispatch(
             sliceApi.util.updateQueryData('getMovies', null, (draft) => {
-              draft.data.push(newMovie);
+              const index = draft.data.findIndex((movie) => movie.id === newMovie.id);
+
+              if (index !== -1) {
+                draft.data[index] = newMovie;
+              }
             }),
           );
         } catch (error) {
