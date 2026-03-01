@@ -1,12 +1,16 @@
 import Typography from '@mui/material/Typography';
 import { useAppSelector } from '@/store/hooks';
-import { selectAllMovies } from '@/store/selectors/movieSelectors';
+import { useSearchParams } from 'react-router';
+import { selectFilteredMovies } from '@/store/selectors/movieSelectors';
 
 export default function MovieCount() {
-  const data = useAppSelector(selectAllMovies);
+  const [searchParams] = useSearchParams();
+  const filteredMovies = useAppSelector((state) => selectFilteredMovies(state, searchParams));
 
   const listLength =
-    data.length === 1 ? `${data.length} movie found` : `${data?.length} movies found`;
+    filteredMovies.length === 1
+      ? `${filteredMovies.length} movie found`
+      : `${filteredMovies?.length} movies found`;
 
   return <Typography variant="subtitle1">{listLength}</Typography>;
 }

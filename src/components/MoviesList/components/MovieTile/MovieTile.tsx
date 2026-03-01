@@ -52,18 +52,43 @@ export default function MovieTile({ movie }: MovieTileProps) {
       <AdminMovieButton />
       <CardContent sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          <Typography variant="body2" sx={{ color: '#999999' }} component="div">
+          <Typography
+            variant="body2"
+            sx={{
+              color: '#999999',
+              maxWidth: '140px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+            component="div"
+          >
             {movie.title}
           </Typography>
           <Typography
-            variant="body2"
-            sx={{ color: '#999999', border: '1px solid #999999', px: 1, py: 0.5 }}
+            variant="caption"
+            sx={{
+              color: '#999999',
+              border: '1px solid #999999',
+              minWidth: '100px',
+              textAlign: 'center',
+              fontSize: '12px',
+            }}
           >
             {movie.release_date}
           </Typography>
         </Box>
-        <Typography variant="subtitle2" sx={{ color: '#999999' }}>
-          {movie.genres}
+        <Typography
+          variant="subtitle2"
+          sx={{
+            color: '#999999',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            maxWidth: '200px',
+          }}
+        >
+          {movie.genres.join(', ')}
         </Typography>
       </CardContent>
     </Card>
