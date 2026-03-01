@@ -12,5 +12,12 @@ export interface Movie {
   release_date: string;
   poster_path: string;
   genres: string[];
+  overview: string;
   id: number;
+}
+
+export interface MoviesState {
+  data: Movie[];
+  isLoading: boolean;
+  error: string | null;
 }

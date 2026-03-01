@@ -1,11 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Movie } from '@store/store-types';
-
-interface MoviesState {
-  data: Movie[];
-  isLoading: boolean;
-  error: string | null;
-}
+import type { Movie, MoviesState } from '@store/store-types';
 
 const initialState: MoviesState = {
   data: [],

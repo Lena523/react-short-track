@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from 'react-router';
 import { useAppSelector } from '@/store/hooks';
 import Spinner from '@/components/common/Spinner/Spinner';
-import { selectUser } from '@/store/slices/userSlice';
+import { selectUser } from '@/store/selectors/userSelectors';
 
 export const UserRoute = () => {
   const { role, isLoading, isInitialized } = useAppSelector(selectUser);

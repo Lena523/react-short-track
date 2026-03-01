@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { setAdmin, setUser, setUserData, setUserLoading } from '@/store/slices/userSlice';
 import RegisterForm from '@components/RegisterForm/RegisterForm';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectUserIsLoading } from '@/store/selectors/userSelectors';
 
 export default function LoginForm() {
   const dispatch = useAppDispatch();
@@ -55,7 +56,7 @@ export default function LoginForm() {
     }
   };
 
-  const userLoading = useAppSelector((state) => state.user.isLoading);
+  const userLoading = useAppSelector(selectUserIsLoading);
   const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
 
   const handleReset = () => {

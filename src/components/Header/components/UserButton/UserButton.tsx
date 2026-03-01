@@ -7,7 +7,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { clearUserData } from '@/store/slices/userSlice';
 import { useNavigate } from 'react-router';
-import { selectUserName } from '@/store/slices/userSlice';
+import { selectUserName } from '@/store/selectors/userSelectors';
 
 export default function UserButton() {
   const name = useAppSelector(selectUserName);

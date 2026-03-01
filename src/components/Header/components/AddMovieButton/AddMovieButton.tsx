@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { useAppSelector } from '@/store/hooks';
 import useCheckLocation from '@/hooks/useCheckLocation';
 import { useNavigate } from 'react-router';
-import { selectUserRole } from '@/store/slices/userSlice';
+import { selectUserRole } from '@/store/selectors/userSelectors';
 
 export default function AddMovieButton() {
   const navigate = useNavigate();

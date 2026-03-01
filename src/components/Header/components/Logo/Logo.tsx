@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router';
 import { useAppSelector } from '@/store/hooks';
-import { selectUserRole } from '@/store/slices/userSlice';
+import { selectUserRole } from '@/store/selectors/userSelectors';
 
 export default function Logo() {
   const navigate = useNavigate();
