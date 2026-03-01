@@ -25,10 +25,18 @@ export const selectFilteredMovies = createSelector(
   [selectAllMovies, (_: RootState, searchParams: URLSearchParams) => searchParams],
   (movies, searchParams) => {
     const search = searchParams.get('search')?.toLowerCase() || '';
-    const genre = searchParams.get('genre') || 'all';
+    const genreParam = searchParams.get('genre') || 'ALL';
+
+    console.log('genreParam:', genreParam);
 
     return movies.filter((movie: Movie) => {
-      if (genre !== 'all' && !movie.genres?.includes(genre)) return false;
+      if (genreParam !== 'ALL') {
+        const movieGenres = movie.genres?.map((genre) => genre.toUpperCase()) || [];
+
+        if (!movieGenres.includes(genreParam)) {
+          return false;
+        }
+      }
 
       if (search) {
         return (
