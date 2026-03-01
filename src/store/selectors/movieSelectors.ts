@@ -27,8 +27,6 @@ export const selectFilteredMovies = createSelector(
     const search = searchParams.get('search')?.toLowerCase() || '';
     const genreParam = searchParams.get('genre') || 'ALL';
 
-    console.log('genreParam:', genreParam);
-
     return movies.filter((movie: Movie) => {
       if (genreParam !== 'ALL') {
         const movieGenres = movie.genres?.map((genre) => genre.toUpperCase()) || [];

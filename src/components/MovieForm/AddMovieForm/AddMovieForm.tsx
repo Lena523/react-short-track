@@ -1,8 +1,7 @@
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
 import type { AddMovieFormInputs } from '@/components/types/movies-types';
 import { textFieldSx } from '@/components/types/movies-types';
-import { useState } from 'react';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useAppDispatch } from '@/store/hooks';
 import {
   TextField,
   Button,
@@ -17,10 +16,15 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import { FormContainer } from '@/components/common/FormContainer/FormContainer';
+import { useCreateMovieMutation } from '@/services/api/apiSlice';
+import { addMovie } from '@/store/slices/movieSlice';
 
 const genreOptions = ['Crime', 'Documentary', 'Horror', 'Comedy', 'Drama', 'Romance'];
 
 export default function AddMovieForm() {
+  const [createMovie, { isLoading }] = useCreateMovieMutation();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -40,19 +44,27 @@ export default function AddMovieForm() {
     },
   });
 
-  const [fileName, setFileName] = useState('');
+  const onSubmit: SubmitHandler<AddMovieFormInputs> = async (data) => {
+    try {
+      const newMovie = await createMovie({
+        title: data.title,
+        tagline: '',
+        vote_average: data.vote_average,
+        vote_count: 1,
+        release_date: data.release_date,
+        poster_path: data.poster_path,
+        overview: data.overview,
+        budget: 1,
+        revenue: 1,
+        runtime: data.runtime,
+        genres: data.genres,
+      }).unwrap();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      setFileName(file.name);
+      dispatch(addMovie(newMovie));
+      reset();
+    } catch (error) {
+      console.error('Login failed', error);
     }
-  };
-
-  const onSubmit = (data: AddMovieFormInputs) => {
-    console.log('Form data:', data);
-    reset();
   };
 
   const handleReset = () => {
@@ -69,46 +81,36 @@ export default function AddMovieForm() {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           <TextField
             label="TITLE"
-            {...register('title', { required: 'ALL FIELDS ARE REQUIRED' })}
+            {...register('title', { required: 'Title is required' })}
             error={!!errors.title}
             helperText={errors.title?.message}
             sx={textFieldSx}
           />
+
           <TextField
             label="RELEASE DATE"
             type="date"
             slotProps={{ inputLabel: { shrink: true } }}
-            {...register('release_date', { required: 'the field is required!' })}
+            {...register('release_date', { required: 'Release date is required' })}
             error={!!errors.release_date}
             helperText={errors.release_date?.message}
             sx={textFieldSx}
           />
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <input
-              type="file"
-              accept="image/*"
-              id="poster-upload"
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-            />
-            <label htmlFor="poster-upload" style={{ minWidth: '200px' }}>
-              <Button
-                variant="contained"
-                component="span"
-                startIcon={<CloudUploadIcon />}
-                sx={{
-                  bgcolor: '#F65261',
-                  width: '100%',
-                }}
-              >
-                choose poster
-              </Button>
-            </label>
-            {fileName && <Box sx={{ color: '#FFFFFF' }}>{fileName}</Box>}
-          </Box>
-
-          <input type="hidden" {...register('poster_path')} />
+          <TextField
+            label="POSTER URL"
+            placeholder="https://example.com/image.jpg"
+            {...register('poster_path', {
+              required: 'Poster URL is required',
+              pattern: {
+                value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i,
+                message: 'Please enter a valid URL',
+              },
+            })}
+            error={!!errors.poster_path}
+            helperText={errors.poster_path?.message}
+            sx={textFieldSx}
+          />
 
           <TextField
             label="RATING"
@@ -116,7 +118,7 @@ export default function AddMovieForm() {
             placeholder="7.8"
             slotProps={{ htmlInput: { min: 0, max: 10, step: 0.1 } }}
             {...register('vote_average', {
-              required: 'the field is required!',
+              required: 'Rating is required',
               min: { value: 0, message: 'Minimum rating is 0' },
               max: { value: 10, message: 'Maximum rating is 10' },
               valueAsNumber: true,
@@ -134,7 +136,7 @@ export default function AddMovieForm() {
               name="genres"
               control={control}
               rules={{
-                required: 'the field is required!',
+                required: 'Genre is required',
                 validate: (value) => value?.length > 0 || 'At least one genre is required',
               }}
               render={({ field }) => (
@@ -180,7 +182,7 @@ export default function AddMovieForm() {
             type="number"
             placeholder="minutes"
             {...register('runtime', {
-              required: 'the field is required!',
+              required: 'Runtime is required',
               min: { value: 1, message: 'Runtime must be positive' },
               valueAsNumber: true,
             })}
@@ -194,17 +196,18 @@ export default function AddMovieForm() {
             placeholder="Movie description"
             multiline
             rows={4}
-            {...register('overview', { required: 'the field is required!' })}
+            {...register('overview', { required: 'Overview is required' })}
             error={!!errors.overview}
             helperText={errors.overview?.message}
             sx={textFieldSx}
           />
+
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
-            <Button variant="blackButton" onClick={handleReset}>
+            <Button variant="blackButton" onClick={handleReset} disabled={isLoading}>
               RESET
             </Button>
-            <Button type="submit" variant="redButton" disabled={!isValid}>
-              SUBMIT
+            <Button type="submit" variant="redButton" disabled={!isValid || isLoading}>
+              {isLoading ? 'SUBMITTING...' : 'SUBMIT'}
             </Button>
           </Box>
         </Box>

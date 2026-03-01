@@ -45,8 +45,23 @@ export const textFieldSx = {
   '& .MuiInputLabel-root': {
     color: '#F65261',
   },
+  '& .MuiInputLabel-root.Mui-focused': {
+    color: '#F65261',
+  },
+  '& .MuiInputLabel-shrink': {
+    color: '#F65261',
+    transform: 'translate(14px, -9px) scale(0.75)',
+  },
   '& .MuiOutlinedInput-root': {
-    '&:hover fieldset': { borderColor: '#F65261' },
+    '&:hover fieldset': {
+      borderColor: '#F65261',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#F65261',
+    },
+  },
+  '& .MuiInputBase-input': {
+    color: 'white',
   },
 };
 

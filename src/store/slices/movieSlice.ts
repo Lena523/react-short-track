@@ -28,10 +28,13 @@ const movieSlice = createSlice({
       state.data = action.payload;
       state.isLoading = false;
     },
+    addMovie: (state, action: PayloadAction<Movie>) => {
+      state.data.push(action.payload);
+    },
   },
 });
 
-export const { getMoviesFailure, getMoviesStart, getMoviesSuccess, setMoviesData } =
+export const { getMoviesFailure, getMoviesStart, getMoviesSuccess, setMoviesData, addMovie } =
   movieSlice.actions;
 export const selectMovies = (state: { movie: MoviesState }) => state.movie.data;
 export const selectMoviesLoading = (state: { movie: MoviesState }) => state.movie.isLoading;

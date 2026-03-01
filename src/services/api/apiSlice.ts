@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type {
-  LoginUser,
-  RegisterUser,
-  LoginUserResponseProps,
-  GetUserProps,
-  RegisterUserResponseProps,
-  ApiMoviesResponse,
+import {
+  type LoginUser,
+  type RegisterUser,
+  type LoginUserResponseProps,
+  type GetUserProps,
+  type RegisterUserResponseProps,
+  type ApiMoviesResponse,
+  type MovieData,
+  type MovieCreateApi,
 } from '../api-types';
 export type { LoginUserResponseProps };
 import type { AppStartListening } from '@/services/api/listnerMiddleware';
@@ -13,6 +15,7 @@ import type { AppStartListening } from '@/services/api/listnerMiddleware';
 export const sliceApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/' }),
+  tagTypes: ['Movies'],
   endpoints: (builder) => ({
     getUser: builder.mutation<LoginUserResponseProps, LoginUser>({
       query: (initialPost) => ({
@@ -41,6 +44,28 @@ export const sliceApi = createApi({
         method: 'GET',
       }),
     }),
+    createMovie: builder.mutation<MovieData, MovieCreateApi>({
+      query: (initialPost) => ({
+        url: 'movies',
+        method: 'POST',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Movies'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newMovie } = await queryFulfilled;
+
+          console.log('Сервер вернул:', newMovie);
+          dispatch(
+            sliceApi.util.updateQueryData('getMovies', null, (draft) => {
+              draft.data.push(newMovie);
+            }),
+          );
+        } catch (error) {
+          console.error('Failed to update cache:', error);
+        }
+      },
+    }),
     getMovieById: builder.query<ApiMoviesResponse, number>({
       query: (id) => ({
         url: `movies/${id}`,
@@ -55,6 +80,7 @@ export const {
   useRegisterUserMutation,
   useGetCurrentUserMutation,
   useGetMoviesQuery,
+  useCreateMovieMutation,
 } = sliceApi;
 
 export const addUserListners = (startAppListening: AppStartListening) => {
@@ -124,6 +150,36 @@ export const addUserListners = (startAppListening: AppStartListening) => {
       const { toast } = await import('react-tiny-toast');
       const toastId = toast.show('Failed to load some movies posters', {
         variant: 'warning',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.createMovie.matchRejected,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('Failed to create a movie', {
+        variant: 'danger',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.createMovie.matchFulfilled,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('The movie has been created', {
+        variant: 'success',
         position: 'bottom-right',
         pause: true,
       });

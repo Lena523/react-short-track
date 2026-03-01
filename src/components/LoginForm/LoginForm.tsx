@@ -10,11 +10,12 @@ import { useGetUserMutation } from '@/services/api/apiSlice';
 import { useState } from 'react';
 import { setAdmin, setUser, setUserData, setUserLoading } from '@/store/slices/userSlice';
 import RegisterForm from '@components/RegisterForm/RegisterForm';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectUserIsLoading } from '@/store/selectors/userSelectors';
+import { useAppDispatch } from '@/store/hooks';
 
 export default function LoginForm() {
   const dispatch = useAppDispatch();
+  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
+  const [getUser, { isLoading }] = useGetUserMutation();
   const {
     register,
     handleSubmit,
@@ -24,10 +25,8 @@ export default function LoginForm() {
     criteriaMode: 'all',
     mode: 'onChange',
   });
-  const [getUser] = useGetUserMutation();
   const onSubmit: SubmitHandler<LoginInputs> = async (user) => {
     try {
-      dispatch(setUserLoading(true));
       const newUser = await getUser({ email: user.email, password: user.password }).unwrap();
       const token = newUser.data?.token;
 
@@ -55,9 +54,6 @@ export default function LoginForm() {
       console.error('Login failed', error);
     }
   };
-
-  const userLoading = useAppSelector(selectUserIsLoading);
-  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
 
   const handleReset = () => {
     reset();
@@ -92,7 +88,7 @@ export default function LoginForm() {
               })}
               error={!!errors.email}
               helperText={errors.email?.message}
-              disabled={userLoading}
+              disabled={isLoading}
             />
             <TextField
               aria-label="PASSWORD"
@@ -105,17 +101,17 @@ export default function LoginForm() {
               })}
               error={!!errors.password}
               helperText={errors.password?.message}
-              disabled={userLoading}
+              disabled={isLoading}
             />
-            <Button variant="redButton" type="submit" disabled={!isValid || userLoading}>
-              {userLoading ? 'LOGGING IN...' : 'LOGIN'}
+            <Button variant="redButton" type="submit" disabled={!isValid || isLoading}>
+              {isLoading ? 'LOGGING IN...' : 'LOGIN'}
             </Button>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'flex-end' }}>
-            <Button variant="blackButton" type="reset" onClick={handleReset} disabled={userLoading}>
+            <Button variant="blackButton" type="reset" onClick={handleReset} disabled={isLoading}>
               RESET
             </Button>
-            <Button variant="redButton" onClick={handleOpenRegisterForm} disabled={userLoading}>
+            <Button variant="redButton" onClick={handleOpenRegisterForm} disabled={isLoading}>
               REGISTER
             </Button>
           </Box>

@@ -13,7 +13,6 @@ export default function GenresFilter() {
 
     if (genre === 'ALL') {
       newParams.delete('genre');
-      console.log('После delete:', [...newParams]);
     } else {
       newParams.set('genre', genre);
     }
