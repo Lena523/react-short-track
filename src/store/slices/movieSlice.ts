@@ -34,7 +34,7 @@ const movieSlice = createSlice({
     updateMovie: (state, action: PayloadAction<Movie>) => {
       const index = state.data.findIndex((movie) => movie.id === action.payload.id);
 
-      if (index) {
+      if (index !== -1) {
         state.data[index] = action.payload;
       }
     },
