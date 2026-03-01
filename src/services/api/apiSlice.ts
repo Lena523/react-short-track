@@ -66,7 +66,28 @@ export const sliceApi = createApi({
         }
       },
     }),
-    getMovieById: builder.query<ApiMoviesResponse, number>({
+    editMovie: builder.mutation<MovieData, MovieData>({
+      query: (initialPost) => ({
+        url: `movies/${initialPost.id}`,
+        method: 'PUT',
+        body: initialPost,
+      }),
+      invalidatesTags: ['Movies'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newMovie } = await queryFulfilled;
+
+          dispatch(
+            sliceApi.util.updateQueryData('getMovies', null, (draft) => {
+              draft.data.push(newMovie);
+            }),
+          );
+        } catch (error) {
+          console.error('Failed to update cache:', error);
+        }
+      },
+    }),
+    getMovieById: builder.query<{ data: MovieData }, number>({
       query: (id) => ({
         url: `movies/${id}`,
         method: 'GET',
@@ -81,6 +102,8 @@ export const {
   useGetCurrentUserMutation,
   useGetMoviesQuery,
   useCreateMovieMutation,
+  useGetMovieByIdQuery,
+  useEditMovieMutation,
 } = sliceApi;
 
 export const addUserListners = (startAppListening: AppStartListening) => {
@@ -178,8 +201,38 @@ export const addUserListners = (startAppListening: AppStartListening) => {
     matcher: sliceApi.endpoints.createMovie.matchFulfilled,
     effect: async (_action, listnerApi) => {
       const { toast } = await import('react-tiny-toast');
-      const toastId = toast.show('The movie has been created', {
+      const toastId = toast.show('The movie has been added to database successfully', {
         variant: 'success',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.editMovie.matchFulfilled,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('The movie has been edited successfully', {
+        variant: 'success',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.editMovie.matchRejected,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('Failed to edit movie', {
+        variant: 'danger',
         position: 'bottom-right',
         pause: true,
       });

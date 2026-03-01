@@ -20,8 +20,6 @@ export default function GenresFilter() {
     setSearchParams(newParams);
   };
 
-  console.log('Current genre param:', searchParams.get('genre'));
-
   return (
     <ButtonGroup sx={{ color: '#FFFFFF' }} variant="text" aria-label="Basic button group">
       {genres.map((genre) => (

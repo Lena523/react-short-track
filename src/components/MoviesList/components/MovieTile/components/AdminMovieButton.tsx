@@ -8,7 +8,11 @@ import { useState } from 'react';
 import { menuItemSx } from '@/components/types/movies-types';
 import { useNavigate } from 'react-router';
 
-export default function AdminMovieButton() {
+type AdminMovieButtonProps = {
+  movieId: number;
+};
+
+export default function AdminMovieButton({ movieId }: AdminMovieButtonProps) {
   const role = useAppSelector((state) => state.user.role);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -36,7 +40,7 @@ export default function AdminMovieButton() {
         <MoreVertIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose} onClick={handleClose}>
-        <MenuItem onClick={() => navigate('/:movieId/edit-movie')} sx={menuItemSx}>
+        <MenuItem onClick={() => navigate(`/${movieId}/edit-movie`)} sx={menuItemSx}>
           Edit
         </MenuItem>
         <MenuItem sx={menuItemSx}>Delete</MenuItem>

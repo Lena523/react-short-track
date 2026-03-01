@@ -46,10 +46,10 @@ export default function MovieTile({ movie }: MovieTileProps) {
           alt={'title'}
           sx={{ objectFit: 'cover' }}
           onError={handleError}
-          onClick={() => navigate('/:movieId')}
+          onClick={() => navigate(movie.id)}
         />
       </Box>
-      <AdminMovieButton />
+      <AdminMovieButton movieId={movie.id} />
       <CardContent sx={{ p: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           <Typography
