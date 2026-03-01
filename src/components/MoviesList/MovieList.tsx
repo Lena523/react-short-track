@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 export default function MovieList() {
   const { data, isLoading } = useGetMoviesQuery(null);
 
-  const movieTiles: Movie[] = useMemo(
+  const movieTiles: Omit<Movie, 'overview'>[] = useMemo(
     () =>
       data?.data.map((movie) => ({
         id: movie.id,

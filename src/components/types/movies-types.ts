@@ -1,7 +1,7 @@
 import type { Movie } from '@/store/store-types';
 
 export type MovieTileProps = {
-  movie: Movie;
+  movie: Omit<Movie, 'overview'>;
 };
 
 export const menuItemSx = {
