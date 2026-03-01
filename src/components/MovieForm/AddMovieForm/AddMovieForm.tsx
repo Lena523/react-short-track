@@ -112,8 +112,8 @@ export default function AddMovieForm() {
                 {...register('poster_path', {
                   required: 'Poster URL is required',
                   pattern: {
-                    value: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i,
-                    message: 'Please enter a valid URL',
+                    value: /^https?:\/\/.+/,
+                    message: 'Please enter a valid URL starting with http:// or https://',
                   },
                 })}
                 error={!!errors.poster_path}
@@ -122,6 +122,7 @@ export default function AddMovieForm() {
                 fullWidth
               />
             </Box>
+
             <Box sx={{ flex: '1 1 300px' }}>
               <TextField
                 label="RATING"
