@@ -7,10 +7,11 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { clearUserData } from '@/store/slices/userSlice';
 import { useNavigate } from 'react-router';
-import { selectUserName } from '@/store/selectors/userSelectors';
+import { selectUserName, selectUserRole } from '@/store/selectors/userSelectors';
 
 export default function UserButton() {
   const name = useAppSelector(selectUserName);
+  const role = useAppSelector(selectUserRole);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const firstLetterOfUserName = name?.trim().charAt(0);
@@ -31,6 +32,10 @@ export default function UserButton() {
   const handleClickAway = () => {
     setOpen(false);
   };
+
+  if (role === 'unknown') {
+    return null;
+  }
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
