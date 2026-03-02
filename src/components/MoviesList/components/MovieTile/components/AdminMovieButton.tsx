@@ -7,12 +7,12 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { menuItemSx } from '@/components/types/movies-types';
 import { useNavigate } from 'react-router';
-
-type AdminMovieButtonProps = {
-  movieId: number;
-};
+import { useDeleteMovieByIdMutation } from '@/services/api/apiSlice';
+import type { AdminMovieButtonProps } from '@components/types/movies-types';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 export default function AdminMovieButton({ movieId }: AdminMovieButtonProps) {
+  const [deleteMovie, { isLoading }] = useDeleteMovieByIdMutation();
   const role = useAppSelector((state) => state.user.role);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -25,6 +25,18 @@ export default function AdminMovieButton({ movieId }: AdminMovieButtonProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onHandleDeleteMovie = () => {
+    try {
+      deleteMovie(movieId);
+    } catch (error) {
+      console.error('Deletion is failed', error);
+    }
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (role !== 'admin') {
     return null;
@@ -43,7 +55,9 @@ export default function AdminMovieButton({ movieId }: AdminMovieButtonProps) {
         <MenuItem onClick={() => navigate(`/${movieId}/edit-movie`)} sx={menuItemSx}>
           Edit
         </MenuItem>
-        <MenuItem sx={menuItemSx}>Delete</MenuItem>
+        <MenuItem onClick={onHandleDeleteMovie} sx={menuItemSx}>
+          Delete
+        </MenuItem>
       </Menu>
     </Box>
   );

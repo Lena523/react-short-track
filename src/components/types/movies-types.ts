@@ -74,3 +74,7 @@ export interface AddMovieFormInputs {
   runtime: number;
   overview: string;
 }
+
+export type AdminMovieButtonProps = {
+  movieId: number;
+};

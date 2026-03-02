@@ -43,6 +43,7 @@ export const sliceApi = createApi({
         url: 'movies',
         method: 'GET',
       }),
+      providesTags: ['Movies'],
     }),
     createMovie: builder.mutation<MovieData, MovieCreateApi>({
       query: (initialPost) => ({
@@ -55,7 +56,6 @@ export const sliceApi = createApi({
         try {
           const { data: newMovie } = await queryFulfilled;
 
-          console.log('Сервер вернул:', newMovie);
           dispatch(
             sliceApi.util.updateQueryData('getMovies', null, (draft) => {
               draft.data.push(newMovie);
@@ -97,6 +97,13 @@ export const sliceApi = createApi({
         method: 'GET',
       }),
     }),
+    deleteMovieById: builder.mutation<null, number>({
+      query: (id) => ({
+        url: `movies/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Movies'],
+    }),
   }),
 });
 
@@ -108,6 +115,7 @@ export const {
   useCreateMovieMutation,
   useGetMovieByIdQuery,
   useEditMovieMutation,
+  useDeleteMovieByIdMutation,
 } = sliceApi;
 
 export const addUserListners = (startAppListening: AppStartListening) => {
@@ -237,6 +245,36 @@ export const addUserListners = (startAppListening: AppStartListening) => {
       const { toast } = await import('react-tiny-toast');
       const toastId = toast.show('Failed to edit movie', {
         variant: 'danger',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.deleteMovieById.matchRejected,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('Failed to delete movie', {
+        variant: 'danger',
+        position: 'bottom-right',
+        pause: true,
+      });
+
+      await listnerApi.delay(5000);
+      toast.remove(toastId);
+    },
+  });
+
+  startAppListening({
+    matcher: sliceApi.endpoints.deleteMovieById.matchFulfilled,
+    effect: async (_action, listnerApi) => {
+      const { toast } = await import('react-tiny-toast');
+      const toastId = toast.show('The movie has been deleted', {
+        variant: 'success',
         position: 'bottom-right',
         pause: true,
       });
