@@ -3,26 +3,16 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
 import AdminMovieButton from '@components/MoviesList/components/MovieTile/components/AdminMovieButton';
 import type { MovieTileProps } from '@/components/types/movies-types';
 import { useNavigate } from 'react-router';
+import checkImageLoading from '@/utils/checkImageLoading';
 
 export default function MovieTile({ movie }: MovieTileProps) {
   const navigate = useNavigate();
-  const [imgSrc, setImgSrc] = useState(() => {
-    if (!movie.poster_path) return '/movie.jpg';
+  const { imgUrl } = checkImageLoading(movie.poster_path);
 
-    if (movie.poster_path.startsWith('http')) {
-      return `https://images.weserv.nl/?url=${encodeURIComponent(movie.poster_path)}`;
-    }
-
-    return `https://images.weserv.nl/?url=${encodeURIComponent(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)}`;
-  });
-
-  const handleError = () => {
-    setImgSrc('/movie.jpg');
-  };
+  console.log(imgUrl);
 
   return (
     <Card
@@ -42,11 +32,10 @@ export default function MovieTile({ movie }: MovieTileProps) {
         <CardMedia
           component="img"
           height="400"
-          image={imgSrc}
+          image={imgUrl}
           alt={'title'}
           sx={{ objectFit: 'cover' }}
-          onError={handleError}
-          onClick={() => navigate(movie.id)}
+          onClick={() => navigate(`/${movie.id}`)}
         />
       </Box>
       <AdminMovieButton movieId={movie.id} />
