@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router';
 import { useDeleteMovieByIdMutation } from '@/services/api/apiSlice';
 import type { AdminMovieButtonProps } from '@components/types/movies-types';
 import Spinner from '@/components/common/Spinner/Spinner';
+import { selectUserRole } from '@/store/selectors/userSelectors';
 
 export default function AdminMovieButton({ movieId }: AdminMovieButtonProps) {
   const [deleteMovie, { isLoading }] = useDeleteMovieByIdMutation();
-  const role = useAppSelector((state) => state.user.role);
+  const role = useAppSelector(selectUserRole);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();

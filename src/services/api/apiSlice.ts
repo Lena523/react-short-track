@@ -180,21 +180,6 @@ export const addUserListners = (startAppListening: AppStartListening) => {
   });
 
   startAppListening({
-    matcher: sliceApi.endpoints.getMovies.matchRejected,
-    effect: async (_action, listnerApi) => {
-      const { toast } = await import('react-tiny-toast');
-      const toastId = toast.show('Failed to load some movies posters', {
-        variant: 'warning',
-        position: 'bottom-right',
-        pause: true,
-      });
-
-      await listnerApi.delay(5000);
-      toast.remove(toastId);
-    },
-  });
-
-  startAppListening({
     matcher: sliceApi.endpoints.createMovie.matchRejected,
     effect: async (_action, listnerApi) => {
       const { toast } = await import('react-tiny-toast');

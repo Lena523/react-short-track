@@ -7,9 +7,12 @@ import Spinner from '@/components/common/Spinner/Spinner';
 import checkImageLoading from '@/utils/checkImageLoading';
 import { useNavigate } from 'react-router';
 import { useDeleteMovieByIdMutation } from '@services/api/apiSlice';
+import { useAppSelector } from '@/store/hooks';
+import { selectUserRole } from '@/store/selectors/userSelectors';
 
 export default function MovieDetails() {
   const { movieId } = useParams();
+  const role = useAppSelector(selectUserRole);
   const { data: movieData, isLoading } = useGetMovieByIdQuery(Number(movieId));
   const movie = movieData?.data;
   const { imgUrl } = checkImageLoading(movie?.poster_path);
@@ -27,7 +30,7 @@ export default function MovieDetails() {
   }
 
   return (
-    <>
+    <Box sx={{ paddingLeft: '40px', paddingRight: '40px' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Button onClick={() => navigate('/')} variant="transparentButton">
@@ -66,17 +69,21 @@ export default function MovieDetails() {
           <Typography variant="subtitle2" sx={{ mb: 4 }}>
             {movie.overview}
           </Typography>
-
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button onClick={() => deleteMovie(Number(movieId))} variant="transparentButton">
-              DELETE
-            </Button>
-            <Button onClick={() => navigate(`/${movieId}/edit-movie`)} variant="transparentButton">
-              EDIT
-            </Button>
-          </Box>
+          {role === 'admin' && (
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Button onClick={() => deleteMovie(Number(movieId))} variant="transparentButton">
+                DELETE
+              </Button>
+              <Button
+                onClick={() => navigate(`/${movieId}/edit-movie`)}
+                variant="transparentButton"
+              >
+                EDIT
+              </Button>
+            </Box>
+          )}
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
